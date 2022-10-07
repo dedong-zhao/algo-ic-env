@@ -6,7 +6,7 @@ Often used shell commands in Unix-like operating system.
 3. **chsh -s /usr/bin/bash**: set the login shell as Bash
 4. **!\***: return the paras of last cmd.
 5. **printenv**: Print all or part of envs.
-## Manual Software Installation:
+## Manual Software Installation and Uninstallation:
 ### Install
 1. tar -xvzf xxx.tar.gz;
 2. check INSTALL file for install instructions;
