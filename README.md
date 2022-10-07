@@ -1,5 +1,5 @@
-# often-used-shell-cmds
-Often used shell commands in Unix-like operating system.
+# ASIC development environment
+
 ## tcsh
 1. **echo $0**: show which shell is currently used;
 2. **lsb_release -a**: show the detailed info. of current os;
