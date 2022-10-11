@@ -87,10 +87,6 @@ alias find 'find . -name !*'
 alias grep 'grep -r \!* .'
 alias nna 'cd /home/dedong.zhao/nvdla'
 ```
-                                               
-## Vim
-1. **\string\c**: search string regardless of case
-
 ## Manual Software Installation and Uninstallation
 ### Install
 1. tar -xvzf xxx.tar.gz;
@@ -100,4 +96,9 @@ alias nna 'cd /home/dedong.zhao/nvdla'
 2. if installed with root account:
    1. back into the dir where you ran ```./configure``` and ```make``` before, and run ```make uninstall```;
    2. if i doesn't work (Makefile not correctly written), try ```checkinstall``` which allows you
-       to build from source code, but have the packages tracked by apt.      
+       to build from source code, but have the packages tracked by apt.                                                 
+
+## Vim
+1. **\string\c**: search string regardless of case
+
+    
