@@ -32,7 +32,7 @@
 22. **top**: display processes（exit with `Ctrl + c`）
 23. **“ ”**：illegal characters contained in file names should be enclosed in double quotes
 24. **!prefix_cmd**: run the most recent cmd matched in the .history file
-25. **bsub -Is "task"**: allocate servers to tasks automatically
+25. **bsub -Is "task"**(IBM Spectrum LSF): allocate servers to tasks automatically
 26. **bjobs -w**(IBM Spectrum LSF): check which server the task is allocated to
 27. **module load/unload**: switch EDA tool version
 28. **ls -R**: list files recursively
