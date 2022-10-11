@@ -91,7 +91,7 @@ alias nna 'cd /home/dedong.zhao/nvdla'
 ## Vim
 1. **\string\c**: search string regardless of case
 
-## Manual Software Installation and Uninstallation:
+## Manual Software Installation and Uninstallation
 ### Install
 1. tar -xvzf xxx.tar.gz;
 2. check INSTALL file for install instructions;
