@@ -1,4 +1,4 @@
-# ASIC development environment
+# ASIC design environment
 
 ## tcsh
 1. **echo $0**: show which shell is currently used
