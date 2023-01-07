@@ -99,6 +99,14 @@ alias nna 'cd /home/dedong.zhao/nvdla'
        to build from source code, but have the packages tracked by apt.                                                 
 
 ## Vim
-1. **\string\c**: search string regardless of case
-
+1. **:/string\c**: case insensitive matching
+2. **:/string\C**: case sensitive matching
+3. **ggVG**: select all
+4. **=**: left alignment
+5. **f+char**: move the cursor to the next char
+6. **F+char**: move the cursor to the last char
+7. **dw**: delete a word from current position
+8. **DEL**: delete a char
+9. **Use a certain row as the prefix of multiple rows**: copy the row multiple times and place them with col operation. 
+10. ****
     
