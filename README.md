@@ -126,5 +126,9 @@ alias nna 'cd /home/dedong.zhao/nvdla'
 25. **:/xx** or **\*xx**: search xx
 26. **\<int\>**: full word match
 27. **:%s/foo/bar/g(c)**: global search and replace
-28.  
-    
+28. **50p**: plaste 50 times
+29. **yy+p**: copy and plaste; **dd+p**: cut and plaste
+30. **:u** or **u**: undo; **CTRL+r**: redo
+31. **:vsp xx.v**: col split; **CTRL+w+w**: switch window
+32. **ngg** or **:n**: go to line n; **gg**: go to head; **G**: go to end
+33. **:2,3>** or **shift+>+>** or **v+>+>**: indentation; **:2,3<** or **shift+<+<** or **v+<+<**: anti-indentation; 
