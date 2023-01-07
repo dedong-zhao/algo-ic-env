@@ -110,7 +110,7 @@ alias nna 'cd /home/dedong.zhao/nvdla'
 9. **Use a certain row as the prefix of multiple rows**: copy the row multiple times and place them with col operation. 
 10. **y+6400**:select 6400 rows
 11. **''**: back to last position
-12. **:r !seq 1 20 or :r !seq 20 -1 1**: generate sequence
+12. **:r !seq 1 20** or **:r !seq 20 -1 1**: generate sequence
 13. **:20,$d**: delete from 20th row to end
 14. **c+$**: delete from current position to line end
 15. **yw**: copy a word
@@ -123,5 +123,8 @@ alias nna 'cd /home/dedong.zhao/nvdla'
 22. **gf**: go to file; **CTRL+^**: go back to last file
 23. **CTRL+v**: col operation; **I+ESC**: insert; **d+ESC**: delete; **c+ESC**: change
 24. **:e**: reload file
-25. **:/xx** or **\*xx**: search xx 
+25. **:/xx** or **\*xx**: search xx
+26. **\<int\>**: full word match
+27. **:%s/foo/bar/g(c)**: global search and replace
+28.  
     
