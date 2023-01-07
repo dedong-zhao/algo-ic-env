@@ -108,5 +108,18 @@ alias nna 'cd /home/dedong.zhao/nvdla'
 7. **dw**: delete a word from current position
 8. **DEL**: delete a char
 9. **Use a certain row as the prefix of multiple rows**: copy the row multiple times and place them with col operation. 
-10. ****
+10. **y+6400**:select 6400 rows
+11. **''**: back to last position
+12. **:r !seq 1 20 or :r !seq 20 -1 1**: generate sequence
+13. **:20,$d**: delete from 20th row to end
+14. **c+$**: delete from current position to line end
+15. **yw**: copy a word
+16. **.**: repeat last operation(usually combined with 17)
+17. **cw**: change word
+18. **".**: back to last modification
+19. **V**: select multiple lines
+20. **CTRL+n**: auto completion
+21. **noh**: cancel highlight
+22. **gf**: go to file; **CTRL+^**: go back to last file
+23. 
     
