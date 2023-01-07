@@ -1,13 +1,13 @@
 # ASIC design environment
-
-## tcsh
+## Common shell commands
+### tcsh
 1. **echo $0**: show which shell is currently used
 2. **lsb_release -a**: show the detailed info. of current os
 3. **chsh -s /usr/bin/bash**: set the login shell as Bash
 4. **!\***: return the paras of last cmd
 5. **printenv**: Print all or part of envs
 
-## Bash
+### Bash
 1. **\ps**：use `ps`'s original func.
 2. **ps | grep simv | awk '{print $1}' | xargs kill -9**: clean processes in bulk
 3. **ps -ef |grep defunct | awk '{print $2 “ ” $3}' |xargs kill -9**: clean zombie processes in bulk
@@ -37,8 +37,9 @@
 27. **module load/unload**: switch EDA tool version
 28. **ls -R**: list files recursively
 29. **kill -9**: kill process forcibly
+30. **find . -type f -ctime -1| xargs ls –l**: find files modified within one day
 
-## .tcshrc
+### .tcshrc
 ```
 #==========================EDA Environment==========================
 #--------------------------SYNOPSYS---------------------------------
@@ -87,18 +88,8 @@ alias find 'find . -name !*'
 alias grep 'grep -r \!* .'
 alias nna 'cd /home/dedong.zhao/nvdla'
 ```
-## Manual Software Installation and Uninstallation
-### Install
-1. tar -xvzf xxx.tar.gz;
-2. check INSTALL file for install instructions;
-### Uninstall
-1. if installed with non-root account (installed into ~): just remove relevant dirs/files;
-2. if installed with root account:
-   1. back into the dir where you ran ```./configure``` and ```make``` before, and run ```make uninstall```;
-   2. if i doesn't work (Makefile not correctly written), try ```checkinstall``` which allows you
-       to build from source code, but have the packages tracked by apt.                                                 
 
-## Vim
+## Common Vim commands
 1. **:/string\c**: case insensitive matching
 2. **:/string\C**: case sensitive matching
 3. **ggVG**: select all
@@ -132,3 +123,14 @@ alias nna 'cd /home/dedong.zhao/nvdla'
 31. **:vsp xx.v**: col split; **CTRL+w+w**: switch window
 32. **ngg** or **:n**: go to line n; **gg**: go to head; **G**: go to end
 33. **:2,3>** or **shift+>+>** or **v+>+>**: indentation; **:2,3<** or **shift+<+<** or **v+<+<**: anti-indentation; 
+
+## Manual Software Installation and Uninstallation
+### Install
+1. tar -xvzf xxx.tar.gz;
+2. check INSTALL file for install instructions;
+### Uninstall
+1. if installed with non-root account (installed into ~): just remove relevant dirs/files;
+2. if installed with root account:
+   1. back into the dir where you ran ```./configure``` and ```make``` before, and run ```make uninstall```;
+   2. if i doesn't work (Makefile not correctly written), try ```checkinstall``` which allows you
+       to build from source code, but have the packages tracked by apt.
