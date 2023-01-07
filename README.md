@@ -121,5 +121,7 @@ alias nna 'cd /home/dedong.zhao/nvdla'
 20. **CTRL+n**: auto completion
 21. **noh**: cancel highlight
 22. **gf**: go to file; **CTRL+^**: go back to last file
-23. 
+23. **CTRL+v**: col operation; **I+ESC**: insert; **d+ESC**: delete; **c+ESC**: change
+24. **:e**: reload file
+25. **:/xx** or **\*xx**: search xx 
     
