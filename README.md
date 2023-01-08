@@ -1,5 +1,5 @@
 # ASIC design environment
-## Common shell commands
+## Shell commands
 ### tcsh
 1. **echo $0**: show which shell is currently used
 2. **lsb_release -a**: show the detailed info. of current os
@@ -39,7 +39,7 @@
 29. **kill -9**: kill process forcibly
 30. **find . -type f -ctime -1| xargs ls –l**: find files modified within one day
 
-## Common Vim commands
+## Vim commands
 1. **:/string\c**: case insensitive matching
 2. **:/string\C**: case sensitive matching
 3. **ggVG**: select all
