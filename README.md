@@ -39,56 +39,6 @@
 29. **kill -9**: kill process forcibly
 30. **find . -type f -ctime -1| xargs ls –l**: find files modified within one day
 
-### .tcshrc
-```
-#==========================EDA Environment==========================
-#--------------------------SYNOPSYS---------------------------------
-setenv Synopsys_Dir /ihp/ihpusr/synopsys
-
-#Verdi
-setenv Verdi_HOME $Synopsys_Dir/verdi201906/verdi/P-2019.06-SP2
-set path=($Verdi_HOME/bin $path) 
-
-#SpyGlass
-setenv SPYGLASS_HOME $Synopsys_Dir/spyglass2012/SPYGLASS_HOME
-set path=($SPYGLASS_HOME/bin $path) 
-
-#VCS MX
-setenv VCSMX_HOME $Synopsys_Dir/vcsmx201606
-set path=($VCSMX_HOME/bin $path)
-
-#--------------------------CADENCE---------------------------------
-setenv Cadence_Dir /ihp/ihpusr/cadence
-
-#Xcelium
-setenv Xcelium_HOME $Cadence_Dir/xcelium2009/tools/
-set path=($Xcelium_HOME/bin $path)
-
-#--------------------------SOFTWARE/LIB--------------------------------- 
-#PERL5LIB: IO/Tee
-setenv PERL5LIB /home/dedong.zhao/tools/lib/perl5/share/perl5
- 
-#SystemC
-setenv SYSTEMC_HOME /home/dedong.zhao/tools/systemc-2.3.0a/lib-linux64
-set path=($SYSTEMC_HOME $path)
- 
-#==========================Alias==========================
-alias l 'ls -la'
-alias g vim
-alias s 'source ~/.tcshrc'
-alias c clear
-alias r 'rm -rf'
-alias eda 'cd /ihp/ihpusr/synopsys'
-alias csh 'vim ~/.tcshrc'
-alias . 'cd ..'
-alias .. 'cd ../..'
-alias ... 'cd ../../..'
-alias cd 'cd \!*; l'
-alias find 'find . -name !*'
-alias grep 'grep -r \!* .'
-alias nna 'cd /home/dedong.zhao/nvdla'
-```
-
 ## Common Vim commands
 1. **:/string\c**: case insensitive matching
 2. **:/string\C**: case sensitive matching
