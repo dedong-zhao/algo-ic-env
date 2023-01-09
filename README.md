@@ -1,13 +1,5 @@
 # ASIC design environment
 ## Shell commands
-### tcsh
-1. **echo $0**: show which shell is currently used
-2. **lsb_release -a**: show the detailed info. of current os
-3. **chsh -s /usr/bin/bash**: set the login shell as Bash
-4. **!\***: return the paras of last cmd
-5. **printenv**: Print all or part of envs
-
-### Bash
 1. **\ps**：use `ps`'s original func.
 2. **ps | grep simv | awk '{print $1}' | xargs kill -9**: clean processes in bulk
 3. **ps -ef |grep defunct | awk '{print $2 “ ” $3}' |xargs kill -9**: clean zombie processes in bulk
@@ -38,6 +30,11 @@
 28. **ls -R**: list files recursively
 29. **kill -9**: kill process forcibly
 30. **find . -type f -ctime -1| xargs ls –l**: find files modified within one day
+31. **echo $0**: show which shell is currently used
+32. **lsb_release -a**: show the detailed info. of current os
+33. **chsh -s /usr/bin/bash**: set the login shell as Bash
+34. **!\***: return the paras of last cmd
+35. **printenv**: Print all or part of envs
 
 ## Vim commands
 1. **:/string\c**: case insensitive matching
@@ -73,6 +70,9 @@
 31. **:vsp xx.v**: col split; **CTRL+w+w**: switch window
 32. **ngg** or **:n**: go to line n; **gg**: go to head; **G**: go to end
 33. **:2,3>** or **shift+>+>** or **v+>+>**: indentation; **:2,3<** or **shift+<+<** or **v+<+<**: anti-indentation; 
+
+## gVim Verilog Plugin
+1. automatic verilog: [https://github.com/HonkW93/automatic-verilog](https://github.com/HonkW93/automatic-verilog)
 
 ## Manual Software Installation and Uninstallation
 ### Install
