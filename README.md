@@ -1,4 +1,124 @@
 # ASIC design environment
+## Synthesis Flow(Based on Synopsys DC)
+**design_syn_flow.tcl**:
+```
+#--------------------------Specify Libraries--------------------------
+set mem_link_library "$MEM_LINK_PATH/T22SRF2HD256X16M2K2H_ssgwct0p81vn40c.db"
+set target_library "$TAR_PATH/tcbn22ulpbwp7t30p140ssg0p81v125c_ccs.db"
+set link_library "* $target_library $mem_link_library"
+#set search_path "$TAR_PATH $MEM_LINK_PATH"
+
+#--------------------------Prepare Filelist---------------------------
+set FILE_LIST ""
+set f [open "./spread.fl" r]
+while {![eof $f]} {
+    gets $f line
+    append FILE_LIST "$line "
+}
+echo $FILE_LIST
+close $f
+
+#--------------------------Read Designs------------------------------
+set TOP design_top
+analyze -format sverilog $FILE_LIST
+elaborate $TOP
+
+#------------------------Set Current Design--------------------------
+#current_design $TOP(auto)
+
+#--------------------------Link Designs------------------------------
+#link(auto)
+
+#-------------------------------SDC----------------------------------
+source design_sdc.tcl
+
+#--------------------Map and Optimize the Design---------------------
+compile_ultra -no_autoungroup -incremental
+
+#---------------Check the Synthesized Design for Consistency---------
+check_design -summary > ./check_design.rpt
+
+#---------------------Report Timing and Area-------------------------
+report_timing > ./timing.rpt
+report_area -hierarchy > ./area.rpt
+
+#----------------------Save Design Database--------------------------
+change_names -rules sverilog -hierarchy
+write_file -format verilog -hierarchy -output design_netlist.v
+write_sdc design_sdc_post_syn
+
+```
+**design_sdc.tcl**:
+```
+#==================================Env Vars===================================
+set TIME_UNIT 1
+set CYCLE200M [expr 5 * $TIME_UNIT]
+set CYCLE8M [expr 125 * $TIME_UNIT]
+
+#==================================Design Env=================================
+#------------------------------Operating Conditions---------------------------
+#GUIDANCE: the worst case: P(1), V(LOW), T(HIGH) for stricter constraint.
+#set_operating_conditions -max ssg0p81v125c(default)
+
+#-------------------------System Interface Characteristics--------------------
+#An AND2 cell with minimum drving strength for stricter constraints.
+set_driving_cell -lib_cell AN2D0BWP7T30P140 [all_inputs]
+#If real clock, set infinite drive strength to avoid automatic buffer insertion.
+set_drive 0 [get_ports[list clk0 clk1]]
+set_load -pin_load 0.02 [all_outputs]
+#set_fanout_load 4 [all_outputs]
+
+#---------------------------------Wire Load Model-----------------------------
+#GUIDANCE: WLM selection does not matter, it is not accurate.
+#set auto_wire_load_selection true(default)
+
+#==================================Design Rule Constr=========================
+#GUIDANCE: use the default
+#set_max_transition  0.25 [current_design]
+#set_max_fanout      32   [current_design]
+#set_max_capacitance 0.5  [current_design]
+
+#==============================Design Optimiz Constr=========================
+#--------------------------------Clock Definition------------------------------
+create_clock -name clk0 -period $CYCLE200M [get_ports clk0]
+create_clock -name clk1 -period $CYCLE8M [get_ports clk1]
+
+set_clock_uncertainty -hold 0.053 [all_clocks]
+set_clock_transition 0.15 [all_clocks]
+set_input_transition 0.2 [remove_from_collection [all_inputs] [all_clocks]]
+
+#--------------------------------I/O Constraint-----------------------------
+#rst_ports
+set rst_inputs [get_ports [list \
+    rst0 \
+    rst1 \
+]]
+set_ideal_network $rst_inputs
+
+#ports in clk0 domain
+set clk0_ports [get_ports [list \
+    clk0_port0 \
+    clk0_port1 \
+]]
+
+set clk0_inputs [get_ports $clk0_ports -filter "port_direction == in"]
+set clk0_outputs [get_ports $clk0_ports -filter "port_direction == out"]
+
+set_input_delay -max [expr $CYCLE200M * 0.6] -clock [get_clocks clk0] $clk0_inputs -add_delay
+set_output_delay -max [expr $CYCLE200M * 0.3] -clock [get_clocks clk0] $clk0_outputs -add_delay
+
+#---------------------------------Timing Exceptions-----------------------------
+set false_ports [get_ports [list \
+    false_port0 \
+    false_port1 \
+]]
+set false_inputs [get_ports $false_ports -filter "port_direction == in"]
+set false_outputs [get_ports $false_ports -filter "port_direction == out"]
+
+set_false_path -from [get_ports $false_inputs]
+set_false_path -to [get_ports $false_outputs]
+
+```
 ## Shell commands
 1. **\ps**：use `ps`'s original func.
 2. **ps | grep simv | awk '{print $1}' | xargs kill -9**: clean processes in bulk
