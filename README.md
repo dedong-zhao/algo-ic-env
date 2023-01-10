@@ -1,5 +1,5 @@
 # ASIC design environment
-## Synthesis Flow(Based on Synopsys DC)
+## Synthesis Flow(DC Based)
 **design_syn_flow.tcl**:
 ```
 #--------------------------Specify Libraries--------------------------
