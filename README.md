@@ -1,4 +1,8 @@
 # ASIC design environment
+## EDA Tools
+### SimVision
+1. **start and load project**: xmverilog -f $PROJ_DIR/proj.vc +gui&
+
 ## Synthesis Flow(DC Based)
 **design_syn_flow.tcl**:
 ```
