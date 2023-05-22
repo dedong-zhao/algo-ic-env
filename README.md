@@ -2,7 +2,8 @@
 ## EDA Tools
 ### SimVision
 1. **start and load project**: xmverilog -f $PROJ_DIR/proj.vc +gui&
-
+### Verdi
+1. **start and load project**: verdi -f $PROJ_DIR/proj.vc&
 ## Synthesis Flow(DC Based)
 **design_syn_flow.tcl**:
 ```
