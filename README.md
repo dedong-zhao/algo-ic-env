@@ -4,8 +4,8 @@
 1. **start and load project**: xmverilog -f $PROJ_DIR/proj.vc +gui&
 ### Verdi
 1. **start and load project**: verdi -f $PROJ_DIR/proj.vc&
-## Synthesis Flow(DC Based)
-**design_syn_flow.tcl**:
+### Synthesis Flow(DC Based)
+1. **design_syn_flow.tcl**:
 ```
 #--------------------------Specify Libraries--------------------------
 set mem_link_library "$MEM_LINK_PATH/T22SRF2HD256X16M2K2H_ssgwct0p81vn40c.db"
@@ -53,7 +53,7 @@ write_file -format verilog -hierarchy -output design_netlist.v
 write_sdc design_sdc_post_syn
 
 ```
-**design_sdc.tcl**:
+2. **design_sdc.tcl**:
 ```
 #==================================Env Vars===================================
 set TIME_UNIT 1
