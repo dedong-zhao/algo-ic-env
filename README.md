@@ -201,8 +201,10 @@ set_false_path -to [get_ports $false_outputs]
 
 ## Manual Software Installation and Uninstallation
 ### Install
-1. tar -xvzf xxx.tar.gz;
-2. check INSTALL file for install instructions;
+1. tar -xvzf xxx.tar.gz
+2. cd xxx
+3. ./configure --prefix= tools/xxx
+4. make; make install
 ### Uninstall
 1. if installed with non-root account (installed into ~): just remove relevant dirs/files;
 2. if installed with root account:
