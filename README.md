@@ -127,13 +127,13 @@ set_false_path -to [get_ports $false_outputs]
 
 ```
 ## Shell commands
-1. **\ps**：use `ps`'s original func.
+1. **\ps**：use original func of cmd `ps`.
 2. **ps | grep simv | awk '{print $1}' | xargs kill -9**: clean processes in bulk
 3. **ps -ef |grep defunct | awk '{print $2 “ ” $3}' |xargs kill -9**: clean zombie processes in bulk
 4. **cd -**: change into former dir
 5. **uname -a**: check sys info
 6. **lsload**(IBM Spectrum LSF): display the current load levels of the cluster
-7. ssh -X xx: switch to server xx
+7. **ssh -X xx**: switch to server xx
 8. **ln -s file filesoft**: create soft links
 9. **find /demo -name "*.v" | xargs cat | grep -v ^$|wc -l**: Count the number of lines in all files ending with ".v" in the demo directory (excluding blank lines)
 10. **module av mathwork**: check module "mathwork" is available or not
