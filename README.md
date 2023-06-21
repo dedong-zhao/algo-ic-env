@@ -124,7 +124,6 @@ set false_outputs [get_ports $false_ports -filter "port_direction == out"]
 
 set_false_path -from [get_ports $false_inputs]
 set_false_path -to [get_ports $false_outputs]
-
 ```
 ## Shell commands
 1. **\ps**：use original func of cmd `ps`.
