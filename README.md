@@ -4,6 +4,7 @@
 1. **start and load project**: `xrun -f $PROJ_DIR/proj.vc -access +rwc -gui&`
 2. **improve font size**: `cp ${XCEILIUM_ROOT}/share/cdssetup/simvision/app-defaults/share/cdssetup/simvision/app-defaults/SimVision ~/.simvision/Xdefaults` and `vim  ~/.simvision/Xdefaults`
 3. **save the signal list in Waveform window**: `File -> Save Command Script` and `Source Command Script`
+4. **reload design in Waveform window**: `Simulation -> Reinvoke Simulator` 
 ### Genus
 1. **generate synthesis script**: `write_template -simple -outfile tempname`
 ### Verdi
