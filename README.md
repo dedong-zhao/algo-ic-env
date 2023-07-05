@@ -56,7 +56,6 @@ report_area -hierarchy > ./area.rpt
 change_names -rules sverilog -hierarchy
 write_file -format verilog -hierarchy -output design_netlist.v
 write_sdc design_sdc_post_syn
-
 ```
 ### Synopsys Design Constraints
 1. **design_sdc.tcl**:
