@@ -6,7 +6,9 @@
 3. **save the signal list in Waveform window**: `File -> Save Command Script` and `Source Command Script`
 4. **reload design in Waveform window**: `Simulation -> Reinvoke Simulator` 
 ### Genus
-1. **generate synthesis script**: `write_template -simple -outfile tempname`
+1. **generate template script for synthesis flow**: `write_template -simple -outfile tempname`
+### Innovus
+1. **generate template script for implementation flow**: `write_flow_template`
 ### Verdi
 1. **start and load project**: `verdi -f $PROJ_DIR/proj.vc&`
 ### DC-Based Synthesis Flow
