@@ -1,5 +1,5 @@
 # ASIC design environment
-## EDA Tools
+## EDA
 ### Xcelium
 1. **start and load project**: `xrun -f $PROJ_DIR/proj.vc -access +rwc -gui&`
 2. **improve font size**: `cp ${XCEILIUM_ROOT}/share/cdssetup/simvision/app-defaults/share/cdssetup/simvision/app-defaults/SimVision ~/.simvision/Xdefaults` and `vim  ~/.simvision/Xdefaults`
@@ -128,7 +128,7 @@ set false_outputs [get_ports $false_ports -filter "port_direction == out"]
 set_false_path -from [get_ports $false_inputs]
 set_false_path -to [get_ports $false_outputs]
 ```
-## Shell commands
+## Shell
 1. **\ps**：use original func of cmd `ps`.
 2. **ps | grep simv | awk '{print $1}' | xargs kill -9**: clean processes in bulk
 3. **ps -ef |grep defunct | awk '{print $2 “ ” $3}' |xargs kill -9**: clean zombie processes in bulk
@@ -165,7 +165,7 @@ set_false_path -to [get_ports $false_outputs]
 34. **!\***: return the paras of last cmd
 35. **printenv**: Print all or part of envs
 
-## Vim commands
+## Vim
 1. **:/string\c**: case insensitive matching
 2. **:/string\C**: case sensitive matching
 3. **ggVG**: select all
