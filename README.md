@@ -9,7 +9,7 @@
 1. **generate synthesis script**: `write_template -simple -outfile tempname`
 ### Verdi
 1. **start and load project**: `verdi -f $PROJ_DIR/proj.vc&`
-### Synthesis Flow(DC Based)
+### DC-Based Synthesis Flow
 1. **design_syn_flow.tcl**:
 ```
 #--------------------------Specify Libraries--------------------------
@@ -58,7 +58,8 @@ write_file -format verilog -hierarchy -output design_netlist.v
 write_sdc design_sdc_post_syn
 
 ```
-2. **design_sdc.tcl**:
+### Synopsys Design Constraints
+1. **design_sdc.tcl**:
 ```
 #==================================Env Vars===================================
 set TIME_UNIT 1
