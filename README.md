@@ -217,3 +217,40 @@ set_false_path -to [get_ports $false_outputs]
    1. back into the dir where you ran ```./configure``` and ```make``` before, and run ```make uninstall```;
    2. if i doesn't work (Makefile not correctly written), try ```checkinstall``` which allows you
        to build from source code, but have the packages tracked by apt.
+
+## File Header Comment
+### VS Studio
+1. Manage --> User Snippets --> Verilog.jason
+2. Add the following code:
+```
+{
+    "HEADER":{
+		"prefix": "header",
+		"body": [
+			"//Institution :    IHP GmbH & University of Potsdam",
+			"//Author      :    Dedong Zhao",
+			"//Contact     :    dedong.zhao@ihp-microelectronics.com",
+			"//Design      :    $TM_FILENAME",
+			"//Time        :    $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND $CURRENT_DATE/$CURRENT_MONTH/$CURRENT_YEAR",
+			"//Description :    ",
+			"//Comments    :    ",
+		]
+	}
+}
+```
+2. Type "header" and Enter
+### PyCharm
+1. File --> Settings --> Editor --> File and Code Templates --> Python Script
+2. Add the following Code:
+```
+# Institution : IHP GmbH & University of Potsdam
+# Author      : Dedong Zhao
+# Contact     : dedong.zhao@ihp-microelectronics.com
+# Time        : ${TIME} ${DATE} 
+# File        : ${NAME}.py
+# Project     : ${PROJECT_NAME}
+# Description :
+# Comments    :
+```
+3. New file with automatically generated header comment
+
