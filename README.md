@@ -9,6 +9,8 @@
 1. **generate template script for synthesis flow**: `write_template -simple -outfile tempname`
 ### Innovus
 1. **generate template script for implementation flow**: `write_flow_template`
+2. **fit, see the outline of the layout**: `f`
+3. **zoom in selected area**: `mouse right click –> hold –> drag –> release`
 ### Verdi
 1. **start and load project**: `verdi -f $PROJ_DIR/proj.vc&`
 ### DC-Based Synthesis Flow
