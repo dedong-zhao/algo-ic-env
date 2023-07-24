@@ -131,7 +131,7 @@ set false_outputs [get_ports $false_ports -filter "port_direction == out"]
 set_false_path -from [get_ports $false_inputs]
 set_false_path -to [get_ports $false_outputs]
 ```
-### Innovus-Based Implementation Flow
+### Innovus-Based Implementation Flow(GUI & CMDs)
 1. **design_imple_flow.tcl**:
 ```
 #---------------------Initialization-----------------------
@@ -143,16 +143,29 @@ setPreference CmdLogMode 2
 setMultiCpuUsage -localCpu 256 -cpuPerRemoteHost 0 -remoteHost 0 -keepLicense true
 
 #---------------------Floorplan----------------------------
+# Floorplan
 loadFPlan inputs/stdp.fp
 
 #------------------------IO--------------------------------
+# Edit -> Pin Editor
+# De-select "Group Bus"
+# Location -> Spread -> From Center -> Spacing
 loadIoFile inputs/stdp.io
 
 redraw
 #--------------------Power Planning------------------------
-source inputs/scripts/globalNetConnect.tcl 
-source inputs/scripts/rings.tcl
-source inputs/scripts/sroute.tcl
+## Add Ring
+# Power -> Power Planning -> Add Ring
+# Use "Offset" for easier ring configuration
+
+## Add Stripes(Optional): Additional connections from power rings to power/ground rails in the core
+# Power -> Power Planning -> Add Stripes
+# "Width" and "Spacing" similar to power ring
+# Use "Start" and "Stop" for easier stripe location
+
+## Add Power Rails: VDD/VSS wires between rings and core power rails
+# Route -> Special Route
+
 redraw
 ```
 
