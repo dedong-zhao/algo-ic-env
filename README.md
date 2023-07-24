@@ -135,9 +135,14 @@ set_false_path -to [get_ports $false_outputs]
 1. **design_imple_flow.tcl**:
 ```
 source ./inputs/stdp.globals
-# Uniquify netlists(if not yet)
 set init_design_uniquify 1 
 init_design
+setMultiCpuUsage -localCpu 256 -cpuPerRemoteHost 0 -remoteHost 0 -keepLicense true
+setDesignMode -process 22
+setPreference CmdLogMode 2
+
+loadFPlan inputs/stdp.fp
+loadIoFile inputs/stdp.io
 ```
 
 ## Shell
