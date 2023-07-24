@@ -11,8 +11,7 @@
 1. **generate template script for implementation flow**: `write_flow_template`
 2. **fit, see the outline of the layout**: `f`
 3. **zoom in selected area**: `mouse right click –> hold –> drag –> release`
-### Verdi
-1. **start and load project**: `verdi -f $PROJ_DIR/proj.vc&`
+
 ### DC-Based Synthesis Flow
 1. **design_syn_flow.tcl**:
 ```
@@ -132,6 +131,15 @@ set false_outputs [get_ports $false_ports -filter "port_direction == out"]
 set_false_path -from [get_ports $false_inputs]
 set_false_path -to [get_ports $false_outputs]
 ```
+### Innovus-Based Implementation Flow
+1. **design_imple_flow.tcl**:
+```
+source ./inputs/stdp.globals
+# Uniquify netlists(if not yet)
+set init_design_uniquify 1 
+init_design
+```
+
 ## Shell
 1. **\ps**：use original func of cmd `ps`.
 2. **ps | grep simv | awk '{print $1}' | xargs kill -9**: clean processes in bulk
@@ -168,6 +176,7 @@ set_false_path -to [get_ports $false_outputs]
 33. **chsh -s /usr/bin/bash**: set the login shell as Bash
 34. **!\***: return the paras of last cmd
 35. **printenv**: Print all or part of envs
+36. **cat /proc/cpuinfo**: physical id(no. of physical CPUs), cpu cores(no. of cores per physical CPU), processor(no. of logical CPUs)
 
 ## Vim
 1. **:/string\c**: case insensitive matching
