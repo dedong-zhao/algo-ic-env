@@ -131,7 +131,6 @@ set_false_path -from [get_ports $false_inputs]
 set_false_path -to [get_ports $false_outputs]
 ```
 ### Innovus-Based Implementation Flow(GUI & CMDs)
-1. **design_imple_flow.tcl**:
 ```
 #------------------------------------------------------------------------------------------ 
 # 1. Design Initialization
@@ -224,18 +223,13 @@ optDesign -postRoute -prefix -postRouteOpt -outDir /home/dedong.zhao/research/ne
 optDesign -postRoute -hold 
 
 #------------------------------------------------------------------------------------------
-# 13. Add Filler
-#------------------------------------------------------------------------------------------
-# 13.1 Place > Physical Cell > Add Filler
-
-#------------------------------------------------------------------------------------------
-# 14. Verification
+# 13. Verification
 #------------------------------------------------------------------------------------------
 # Optional if not taped out
-# 14.1 Verify > Verify DRC
+# 13.1 Verify > Verify DRC
 verify_drc 
 
-# 14.2 Verify > Verify Conectivity 
+# 13.2 Verify > Verify Conectivity 
     # - Regular Only
 verifyConnectivity -type regular
 
@@ -243,22 +237,9 @@ editDelete -regular_wire_with_drc
 routeDesign
 
 #------------------------------------------------------------------------------------------
-# 15. PPA
+# 14. Add Filler
 #------------------------------------------------------------------------------------------
-# 15.1 Dynamic Power Consumption
-# dump waveform into vcd file in testbench: dumpfile("stdp.vcd") & dumpvars(0, stdp_u0)
-read_activity_file -reset
-read_activity_file -format SHM -scope stdp
-
-set_power -reset
-set_powerup_analysis -reset
-set_dynamic_power_simulation -reset
-
-report_power -outfile ./stdp_dynamic_power.rpt
-
-# 15.2 Timing and Area
-report_timing
-report_area 
+# 14.1 Place > Physical Cell > Add Filler
 ```
 2. **mmmc.view**:
 ```
@@ -312,6 +293,10 @@ set init_gnd_net {VSS}
 
 # Analysis Configuration
 set init_mmmc_file {inputs/mmmc.view}
+```
+### Voltus-Based Dynamic Power Analysis(GUI & CMDs)
+```
+to be done
 ```
 ## Shell
 1. **\ps**：use original func of cmd `ps`.
