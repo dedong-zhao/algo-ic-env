@@ -133,41 +133,186 @@ set_false_path -to [get_ports $false_outputs]
 ### Innovus-Based Implementation Flow(GUI & CMDs)
 1. **design_imple_flow.tcl**:
 ```
-#---------------------Initialization-----------------------
-source ./inputs/stdp.globals
-set init_design_uniquify 1 
-init_design
-setDesignMode -process 22
-setPreference CmdLogMode 2
-setMultiCpuUsage -localCpu 256 -cpuPerRemoteHost 0 -remoteHost 0 -keepLicense true
+#------------------------------------------------------------------------------------------ 
+# 1. Design Initialization
+#------------------------------------------------------------------------------------------ 
+# File -> Import Design -> Load -> OK
 
-#---------------------Floorplan----------------------------
-# Floorplan
-loadFPlan inputs/stdp.fp
+#------------------------------------------------------------------------------------------
+# 2. Floorplan
+#------------------------------------------------------------------------------------------
 
-#------------------------IO--------------------------------
-# Edit -> Pin Editor
-# De-select "Group Bus"
-# Location -> Spread -> From Center -> Spacing
-loadIoFile inputs/stdp.io
+#------------------------------------------------------------------------------------------
+# 3. Power Plan
+#------------------------------------------------------------------------------------------
+# 3.1 Power -> Power Planning -> Add Ring
+    # - Use "Offset" for easier ring configuration
 
-redraw
-#--------------------Power Planning------------------------
-## Add Ring
-# Power -> Power Planning -> Add Ring
-# Use "Offset" for easier ring configuration
+# Optional: Additional connections from power rings to power/ground rails in the core.
+# 3.2 Power -> Power Planning -> Add Stripes
+    # - "Width" and "Spacing" similar to power ring
+    # - Use "Start" and "Stop" for easier stripe location
 
-## Add Stripes(Optional): Additional connections from power rings to power/ground rails in the core
-# Power -> Power Planning -> Add Stripes
-# "Width" and "Spacing" similar to power ring
-# Use "Start" and "Stop" for easier stripe location
+#------------------------------------------------------------------------------------------
+# 5. Route
+#------------------------------------------------------------------------------------------
+# VDD/VSS wires between rings and core power rails
+# 5.1 Route -> Special Route
 
-## Add Power Rails: VDD/VSS wires between rings and core power rails
-# Route -> Special Route
+#------------------------------------------------------------------------------------------
+# 6. Pin Assignment
+#------------------------------------------------------------------------------------------
+# 6.1 Edit -> Pin Editor
+    # - De-select "Group Bus"
+    # - Location -> Spread -> From Center -> Spacing
 
-redraw
+#------------------------------------------------------------------------------------------
+# 7. Place
+#------------------------------------------------------------------------------------------
+# 7.1 Place -> Place Standard Cell
+
+#------------------------------------------------------------------------------------------
+# 8. Pre-CTS Timing Analysis and Optimization
+#------------------------------------------------------------------------------------------
+
+setAnalysisMode -cppr both   
+timeDesign -preCTS -expandedViews -prefix preCTS -outDir /home/dedong.zhao/research/neuromorphic/synapse/work/inn/timingReports/preCTS
+optDesign  -preCTS -prefix preCTSOpt -outDir /home/dedong.zhao/research/neuromorphic/synapse/work/inn/timingReports/preCTSOpt
+
+# Optional
+optDesign  -incr
+
+#------------------------------------------------------------------------------------------
+# 9. CTS
+#------------------------------------------------------------------------------------------
+
+create_ccopt_clock_tree_spec
+get_ccopt_clock_trees * # myCLK
+set_ccopt_property target_max_trans 60 # 60ps
+set_ccopt_property target_skew 20 # 20ps
+ccopt_design
+
+#------------------------------------------------------------------------------------------
+# 10. Post-CTS Timing Analysis and Optimization
+#------------------------------------------------------------------------------------------
+
+setAnalysisMode -cppr both
+timeDesign -postCTS -expandedViews -prefix postCTS -outDir /home/dedong.zhao/research/neuromorphic/synapse/work/inn/timingReports/postCTS
+optDesign  -postCTS -prefix postCTSOpt -outDir /home/dedong.zhao/research/neuromorphic/synapse/work/inn/timingReports/postCTSOpt
+
+# Optional
+optDesign  -incr
+
+# if setup fixed
+optDesign  -postCTS -hold
+
+#------------------------------------------------------------------------------------------
+# 11. Route
+#------------------------------------------------------------------------------------------
+# 11.1 Route -> NanoRoute -> Route
+    # - viaOpt & - wireOpt 
+
+#------------------------------------------------------------------------------------------
+# 12. Post-Route Timing Analysis and Optimization
+#------------------------------------------------------------------------------------------
+
+setAnalysisMode -cppr both -analysisType onChipVariation
+timeDesign -postRoute -expandedViews -prefix -postRoute -outDir /home/dedong.zhao/research/neuromorphic/synapse/work/inn/timingReports/postRoute
+optDesign -postRoute -prefix -postRouteOpt -outDir /home/dedong.zhao/research/neuromorphic/synapse/work/inn/timingReports/postRouteOpt 
+
+# hold-timing violation fixing algorithm is setup-timing aware
+optDesign -postRoute -hold 
+
+#------------------------------------------------------------------------------------------
+# 13. Add Filler
+#------------------------------------------------------------------------------------------
+# 13.1 Place > Physical Cell > Add Filler
+
+#------------------------------------------------------------------------------------------
+# 14. Verification
+#------------------------------------------------------------------------------------------
+# Optional if not taped out
+# 14.1 Verify > Verify DRC
+verify_drc 
+
+# 14.2 Verify > Verify Conectivity 
+    # - Regular Only
+verifyConnectivity -type regular
+
+editDelete -regular_wire_with_drc
+routeDesign
+
+#------------------------------------------------------------------------------------------
+# 15. PPA
+#------------------------------------------------------------------------------------------
+# 15.1 Dynamic Power Consumption
+# dump waveform into vcd file in testbench: dumpfile("stdp.vcd") & dumpvars(0, stdp_u0)
+read_activity_file -reset
+read_activity_file -format SHM -scope stdp
+
+set_power -reset
+set_powerup_analysis -reset
+set_dynamic_power_simulation -reset
+
+report_power -outfile ./stdp_dynamic_power.rpt
+
+# 15.2 Timing and Area
+report_timing
+report_area 
 ```
+2. **mmmc.view**:
+```
+#---------------------------------------------------------------------
+# constraint modes
+#---------------------------------------------------------------------
+create_constraint_mode -name pre_cts_constr -sdc_files {inputs/stdp_m.sdc}
+# create_constraint_mode -name post_cts_constr -sdc_files {inputs/stdp_m_post_cts.sdc}
 
+#---------------------------------------------------------------------
+# delay corner = timing library plus rc corner
+#---------------------------------------------------------------------
+# worst-case corner = max delay, affects setup
+# best-case corner  = min delay, affects hold
+
+# typical timing library
+create_library_set -name tc_lib -timing {/ihp/projects/_COMMON/GF22FDX/22FDX-EXT_IP/GF22FDX_SC8T_104CPP_BASE_CSC20R_FDK_RELV05R50/model/timing/lib/GF22FDX_SC8T_104CPP_BASE_CSC20R_TT_0P50V_0P00V_0P00V_0P00V_25C.lib.gz}
+
+# create RC corner from QRC tech file
+create_rc_corner -name rc_corner -qx_tech_file {/ihp/projects/_COMMON/GF22FDX/22FDX-EXT/V1.0_4.1/PEX/QRC/10M_2Mx_5Cx_1Jx_2Qx_LBthick/nominal/qrcTechFile} -T {25}
+
+create_delay_corner -name tc_dc -library_set {tc_lib} -rc_corner {rc_corner}
+
+#---------------------------------------------------------------------
+# analysis view = constraint mode x delay_corner
+#---------------------------------------------------------------------
+create_analysis_view -name typ -constraint_mode {pre_cts_constr} -delay_corner {tc_dc} 
+
+#---------------------------------------------------------------------
+# set analysis view to above for both setup and hold
+#---------------------------------------------------------------------
+set_analysis_view -setup {typ} -hold {typ}
+```
+3. **design.globals**:
+```
+# Netlist
+set design_netlisttype verilog
+set init_verilog {inputs/stdp_m.v}
+set init_design_set_top 1
+set init_top_cell stdp
+
+# Technology/Physical Libraries
+set init_lef_file { /ihp/projects/_COMMON/GF22FDX/22FDX-EXT/V1.0_4.1/PlaceRoute/Innovus/Techfiles/10M_2Mx_5Cx_1Jx_2Qx_LB/22FDSOI_10M_2Mx_5Cx_1Jx_2Qx_LB_104cpp_tech.lef \
+                    /ihp/projects/_COMMON/GF22FDX/22FDX-EXT_IP/GF22FDX_SC8T_104CPP_BASE_CSC20R_FDK_RELV05R50/lef/GF22FDX_SC8T_104CPP_BASE_CSC20R.lef}
+
+# Floorplan
+
+# Power
+set init_pwr_net {VDD}
+set init_gnd_net {VSS}
+
+# Analysis Configuration
+set init_mmmc_file {inputs/mmmc.view}
+```
 ## Shell
 1. **\ps**：use original func of cmd `ps`.
 2. **ps | grep simv | awk '{print $1}' | xargs kill -9**: clean processes in bulk
