@@ -132,114 +132,146 @@ set_false_path -to [get_ports $false_outputs]
 ```
 ### Innovus-Based Implementation Flow(GUI & CMDs)
 ```
-#------------------------------------------------------------------------------------------ 
+###########################################################################################
 # 1. Design Initialization
-#------------------------------------------------------------------------------------------ 
-# File -> Import Design -> Load -> OK
+########################################################################################### 
+# 1.1 File -> Import Design -> Load -> OK
 
-#------------------------------------------------------------------------------------------
+source ./inputs/stdp.globals
+set init_design_uniquify 1 
+init_design
+setDesignMode -process 22
+setPreference CmdLogMode 2
+setMultiCpuUsage -localCpu 16 -cpuPerRemoteHost 8 -remoteHost 0 -keepLicense true
+
+# 1.2 File -> Save/Restore Design
+saveDesign design.enc
+# saveDesign design.enc -timingGraph
+restoreDesign design.enc.dat top
+
+###########################################################################################
 # 2. Floorplan
-#------------------------------------------------------------------------------------------
+###########################################################################################
+# 2.1 Floorplan > Specify Floorplan
+saveFPlan inputs/stdp.fp
+loadFPlan inputs/stdp.fp
 
-#------------------------------------------------------------------------------------------
-# 3. Power Plan
-#------------------------------------------------------------------------------------------
-# 3.1 Power -> Power Planning -> Add Ring
-    # - Use "Offset" for easier ring configuration
-
-# Optional: Additional connections from power rings to power/ground rails in the core.
-# 3.2 Power -> Power Planning -> Add Stripes
-    # - "Width" and "Spacing" similar to power ring
-    # - Use "Start" and "Stop" for easier stripe location
-
-#------------------------------------------------------------------------------------------
-# 5. Route
-#------------------------------------------------------------------------------------------
-# VDD/VSS wires between rings and core power rails
-# 5.1 Route -> Special Route
-
-#------------------------------------------------------------------------------------------
-# 6. Pin Assignment
-#------------------------------------------------------------------------------------------
-# 6.1 Edit -> Pin Editor
+###########################################################################################
+# 3. Pin Assignment
+###########################################################################################
+# 3.1 Edit -> Pin Editor
     # - De-select "Group Bus"
     # - Location -> Spread -> From Center -> Spacing
 
-#------------------------------------------------------------------------------------------
-# 7. Place
-#------------------------------------------------------------------------------------------
-# 7.1 Place -> Place Standard Cell
+saveIOfile inputs/stdp.io
+loadIoFile inputs/stdp.io
 
-#------------------------------------------------------------------------------------------
-# 8. Pre-CTS Timing Analysis and Optimization
-#------------------------------------------------------------------------------------------
+###########################################################################################
+# 4. Power Plan
+###########################################################################################
+# 4.1 Power -> Power Planning -> Add Ring
+    # - Use "Offset" for easier ring configuration
+
+# Optional: Additional connections from power rings to power/ground rails in the core.
+# 4.2 Power -> Power Planning -> Add Stripes
+    # - "Width" and "Spacing" similar to power ring
+    # - Use "Start" and "Stop" for easier stripe location
+
+# VDD/VSS wires between rings and core power rails
+# 4.3 Route -> Special Route
+
+###########################################################################################
+# 5. Place
+###########################################################################################
+# 5.1 Place -> Place Standard Cell
+place_design -noprePlaceOpt
+
+# checkPlace
+# unplaceAllInsts
+# editDelete -type Regular
+
+###########################################################################################
+# 6. Pre-CTS Timing Analysis and Optimization
+###########################################################################################
 
 setAnalysisMode -cppr both   
-timeDesign -preCTS -expandedViews -prefix preCTS -outDir /home/dedong.zhao/research/neuromorphic/synapse/work/inn/timingReports/preCTS
-optDesign  -preCTS -prefix preCTSOpt -outDir /home/dedong.zhao/research/neuromorphic/synapse/work/inn/timingReports/preCTSOpt
 
-# Optional
-optDesign  -incr
+timeDesign -preCTS       -prefix preCTSSetup        -outDir ./outputs/timingReports/preCTSSetup
 
-#------------------------------------------------------------------------------------------
-# 9. CTS
-#------------------------------------------------------------------------------------------
+optDesign  -preCTS -drv
+
+optDesign  -preCTS       -prefix preCTSSetupOpt     -outDir ./outputs/timingReports/preCTSSetupOpt
+optDesign  -preCTS -incr -prefix preCTSSetupIncrOpt -outDir ./outputs/timingReports/preCTSSetupIncrOpt
+
+###########################################################################################
+# 7. CTS
+###########################################################################################
 
 create_ccopt_clock_tree_spec
-get_ccopt_clock_trees * # myCLK
+# get_ccopt_clock_trees * # myCLK
 set_ccopt_property target_max_trans 60 # 60ps
 set_ccopt_property target_skew 20 # 20ps
 ccopt_design
 
-#------------------------------------------------------------------------------------------
-# 10. Post-CTS Timing Analysis and Optimization
-#------------------------------------------------------------------------------------------
+report_ccopt_clock_trees -file ./outputs/stdp_clock_trees.rpt
+ctd_win
+###########################################################################################
+# 8. Post-CTS Timing Analysis and Optimization
+###########################################################################################
 
 setAnalysisMode -cppr both
-timeDesign -postCTS -expandedViews -prefix postCTS -outDir /home/dedong.zhao/research/neuromorphic/synapse/work/inn/timingReports/postCTS
-optDesign  -postCTS -prefix postCTSOpt -outDir /home/dedong.zhao/research/neuromorphic/synapse/work/inn/timingReports/postCTSOpt
 
-# Optional
-optDesign  -incr
+timeDesign -postCTS       -prefix postCTSSetup -outDir ./outputs/timingReports/postCTSSetup
+timeDesign -postCTS -hold -prefix postCTSHold  -outDir ./outputs/timingReports/postCTSHold
 
-# if setup fixed
-optDesign  -postCTS -hold
+optDesign -postCTS       -prefix postCTSSetupOpt     -outDir ./outputs/timingReports/postCTSSetupOpt
+optDesign -postCTS -incr -prefix postCTSSetupIncrOpt -outDir ./outputs/timingReports/postCTSSetupIncrOpt
+optDesign -postCTS -hold -prefix postCTSHoldOpt      -outDir ./outputs/timingReports/postCTSHoldOpt
 
-#------------------------------------------------------------------------------------------
-# 11. Route
-#------------------------------------------------------------------------------------------
-# 11.1 Route -> NanoRoute -> Route
+report_clocks
+get_property [all_clocks] is_propagated_clock
+
+###########################################################################################
+# 9. Route
+###########################################################################################
+# 9.1 Route -> NanoRoute -> Route
     # - viaOpt & - wireOpt 
 
-#------------------------------------------------------------------------------------------
-# 12. Post-Route Timing Analysis and Optimization
-#------------------------------------------------------------------------------------------
+routeDesign -globalDetail -viaOpt -wireOpt
+
+###########################################################################################
+# 10. Post-Route Timing Analysis and Optimization
+###########################################################################################
+report_clock_timing -type summary
 
 setAnalysisMode -cppr both -analysisType onChipVariation
-timeDesign -postRoute -expandedViews -prefix -postRoute -outDir /home/dedong.zhao/research/neuromorphic/synapse/work/inn/timingReports/postRoute
-optDesign -postRoute -prefix -postRouteOpt -outDir /home/dedong.zhao/research/neuromorphic/synapse/work/inn/timingReports/postRouteOpt 
 
-# hold-timing violation fixing algorithm is setup-timing aware
-optDesign -postRoute -hold 
+timeDesign -postRoute       -prefix -postRouteSetup -outDir ./outputs/timingReports/postRouteSetup
+timeDesign -postRoute -hold -prefix -postRouteHold  -outDir ./outputs/timingReports/postRouteHold
 
-#------------------------------------------------------------------------------------------
-# 13. Verification
-#------------------------------------------------------------------------------------------
+optDesign -postRoute       -prefix -postRouteSetupOpt      -outDir ./outputs/timingReports/postRouteSetupOpt 
+optDesign -postRoute -incr -prefix -postRouteSetupIncrOpt  -outDir ./outputs/timingReports/postRouteSetupIncrOpt
+optDesign -postRoute -hold -prefix -postRouteHoldOpt       -outDir ./outputs/timingReports/postRouteHoldOpt
+
+###########################################################################################
+# 11. Verification
+###########################################################################################
 # Optional if not taped out
-# 13.1 Verify > Verify DRC
+# 11.1 Verify > Verify DRC
 verify_drc 
 
-# 13.2 Verify > Verify Conectivity 
+# 11.2 Verify > Verify Conectivity 
     # - Regular Only
 verifyConnectivity -type regular
 
 editDelete -regular_wire_with_drc
 routeDesign
 
-#------------------------------------------------------------------------------------------
-# 14. Add Filler
-#------------------------------------------------------------------------------------------
-# 14.1 Place > Physical Cell > Add Filler
+###########################################################################################
+# 12. Add Filler
+###########################################################################################
+# 12.1 Place > Physical Cell > Add Filler
+
 ```
 2. **mmmc.view**:
 ```
