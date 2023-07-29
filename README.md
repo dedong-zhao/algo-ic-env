@@ -371,9 +371,6 @@ to be done
 32. **ngg** or **:n**: go to line n; **gg**: go to head; **G**: go to end
 33. **:2,3>** or **shift+>+>** or **v+>+>**: indentation; **:2,3<** or **shift+<+<** or **v+<+<**: anti-indentation; 
 
-## gVim Verilog Plugin
-1. automatic verilog: [https://github.com/HonkW93/automatic-verilog](https://github.com/HonkW93/automatic-verilog)
-
 ## Manual Software Installation and Uninstallation
 ### Install
 1. tar -xvzf xxx.tar.gz
