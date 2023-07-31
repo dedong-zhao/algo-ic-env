@@ -224,7 +224,7 @@ set_interactive_constraint_modes [all_constraint_modes -active]
 set_propagated_clock [all_clocks]
 set_interactive_constraint_modes {}
 
-report_clocks
+# report_clocks
 get_property [all_clocks] is_propagated_clock
 
 setAnalysisMode -cppr both
