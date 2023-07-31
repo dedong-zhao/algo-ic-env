@@ -132,43 +132,44 @@ set_false_path -to [get_ports $false_outputs]
 ```
 ### Innovus-Based Implementation Flow(GUI & CMDs)
 ```
-###########################################################################################
+#==========================================================================================
 # 1. Design Initialization
-########################################################################################### 
+#========================================================================================== 
 # 1.1 File -> Import Design -> Load -> OK
 
 source ./inputs/stdp.globals
 set init_design_uniquify 1 
 init_design
+
 setDesignMode -process 22
 setPreference CmdLogMode 2
 setMultiCpuUsage -localCpu 16 -cpuPerRemoteHost 8 -remoteHost 0 -keepLicense true
 
 # 1.2 File -> Save/Restore Design
-saveDesign design.enc
-# saveDesign design.enc -timingGraph
-restoreDesign design.enc.dat top
+saveDesign stdp.enc
+saveDesign design.enc -timingGraph
+restoreDesign stdp.enc.dat stdp
 
-###########################################################################################
+#==========================================================================================
 # 2. Floorplan
-###########################################################################################
+#==========================================================================================
 # 2.1 Floorplan > Specify Floorplan
-saveFPlan inputs/stdp.fp
-loadFPlan inputs/stdp.fp
+# saveFPlan inputs/stdp.fp
+# loadFPlan inputs/stdp.fp
 
-###########################################################################################
+#==========================================================================================
 # 3. Pin Assignment
-###########################################################################################
+#==========================================================================================
 # 3.1 Edit -> Pin Editor
     # - De-select "Group Bus"
     # - Location -> Spread -> From Center -> Spacing
 
-saveIOfile inputs/stdp.io
-loadIoFile inputs/stdp.io
+# saveIOfile inputs/stdp.io
+# loadIoFile inputs/stdp.io
 
-###########################################################################################
+#==========================================================================================
 # 4. Power Plan
-###########################################################################################
+#==========================================================================================
 # 4.1 Power -> Power Planning -> Add Ring
     # - Use "Offset" for easier ring configuration
 
@@ -180,9 +181,9 @@ loadIoFile inputs/stdp.io
 # VDD/VSS wires between rings and core power rails
 # 4.3 Route -> Special Route
 
-###########################################################################################
+#==========================================================================================
 # 5. Place
-###########################################################################################
+#==========================================================================================
 # 5.1 Place -> Place Standard Cell
 place_design -noprePlaceOpt
 
@@ -190,9 +191,9 @@ place_design -noprePlaceOpt
 # unplaceAllInsts
 # editDelete -type Regular
 
-###########################################################################################
+#==========================================================================================
 # 6. Pre-CTS Timing Analysis and Optimization
-###########################################################################################
+#==========================================================================================
 
 setAnalysisMode -cppr both   
 
@@ -203,9 +204,9 @@ optDesign  -preCTS -drv
 optDesign  -preCTS       -prefix preCTSSetupOpt     -outDir ./outputs/timingReports/preCTSSetupOpt
 optDesign  -preCTS -incr -prefix preCTSSetupIncrOpt -outDir ./outputs/timingReports/preCTSSetupIncrOpt
 
-###########################################################################################
+#==========================================================================================
 # 7. CTS
-###########################################################################################
+#==========================================================================================
 
 create_ccopt_clock_tree_spec
 # get_ccopt_clock_trees * # myCLK
@@ -215,9 +216,16 @@ ccopt_design
 
 report_ccopt_clock_trees -file ./outputs/stdp_clock_trees.rpt
 ctd_win
-###########################################################################################
+
+#==========================================================================================
 # 8. Post-CTS Timing Analysis and Optimization
-###########################################################################################
+#==========================================================================================
+set_interactive_constraint_modes [all_constraint_modes -active]
+set_propagated_clock [all_clocks]
+set_interactive_constraint_modes {}
+
+report_clocks
+get_property [all_clocks] is_propagated_clock
 
 setAnalysisMode -cppr both
 
@@ -227,51 +235,46 @@ timeDesign -postCTS -hold -prefix postCTSHold  -outDir ./outputs/timingReports/p
 optDesign -postCTS       -prefix postCTSSetupOpt     -outDir ./outputs/timingReports/postCTSSetupOpt
 optDesign -postCTS -incr -prefix postCTSSetupIncrOpt -outDir ./outputs/timingReports/postCTSSetupIncrOpt
 optDesign -postCTS -hold -prefix postCTSHoldOpt      -outDir ./outputs/timingReports/postCTSHoldOpt
-
-report_clocks
-get_property [all_clocks] is_propagated_clock
-
-###########################################################################################
+#==========================================================================================
 # 9. Route
-###########################################################################################
+#==========================================================================================
 # 9.1 Route -> NanoRoute -> Route
     # - viaOpt & - wireOpt 
 
 routeDesign -globalDetail -viaOpt -wireOpt
 
-###########################################################################################
+#==========================================================================================
 # 10. Post-Route Timing Analysis and Optimization
-###########################################################################################
+#==========================================================================================
 report_clock_timing -type summary
 
 setAnalysisMode -cppr both -analysisType onChipVariation
 
-timeDesign -postRoute       -prefix -postRouteSetup -outDir ./outputs/timingReports/postRouteSetup
-timeDesign -postRoute -hold -prefix -postRouteHold  -outDir ./outputs/timingReports/postRouteHold
+timeDesign -postRoute       -prefix postRouteSetup -outDir ./outputs/timingReports/postRouteSetup
+timeDesign -postRoute -hold -prefix postRouteHold  -outDir ./outputs/timingReports/postRouteHold
 
-optDesign -postRoute       -prefix -postRouteSetupOpt      -outDir ./outputs/timingReports/postRouteSetupOpt 
-optDesign -postRoute -incr -prefix -postRouteSetupIncrOpt  -outDir ./outputs/timingReports/postRouteSetupIncrOpt
-optDesign -postRoute -hold -prefix -postRouteHoldOpt       -outDir ./outputs/timingReports/postRouteHoldOpt
+optDesign -postRoute       -prefix postRouteSetupOpt      -outDir ./outputs/timingReports/postRouteSetupOpt 
+optDesign -postRoute -incr -prefix postRouteSetupIncrOpt  -outDir ./outputs/timingReports/postRouteSetupIncrOpt
+optDesign -postRoute -hold -prefix postRouteHoldOpt       -outDir ./outputs/timingReports/postRouteHoldOpt
 
-###########################################################################################
-# 11. Verification
-###########################################################################################
+#==========================================================================================
+# 11. Add Filler
+#==========================================================================================
+# 11.1 Place > Physical Cell > Add Filler
+
+#==========================================================================================
+# 12. Verification
+#==========================================================================================
 # Optional if not taped out
-# 11.1 Verify > Verify DRC
+# 12.1 Verify > Verify DRC
 verify_drc 
 
-# 11.2 Verify > Verify Conectivity 
+# 12.2 Verify > Verify Conectivity 
     # - Regular Only
 verifyConnectivity -type regular
 
 editDelete -regular_wire_with_drc
 routeDesign
-
-###########################################################################################
-# 12. Add Filler
-###########################################################################################
-# 12.1 Place > Physical Cell > Add Filler
-
 ```
 2. **mmmc.view**:
 ```
