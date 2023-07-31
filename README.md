@@ -63,9 +63,10 @@ write_sdc design_sdc_post_syn
 2. **design_sdc.tcl**:
 ```
 #==================================Env Vars===================================
+# time unit: 1ps
 set TIME_UNIT 1
-set CYCLE200M [expr 5 * $TIME_UNIT]
-set CYCLE8M [expr 125 * $TIME_UNIT]
+set CYCLE200G [expr 5 * $TIME_UNIT]
+set CYCLE8G [expr 125 * $TIME_UNIT]
 
 #==================================Design Env=================================
 #------------------------------Operating Conditions---------------------------
