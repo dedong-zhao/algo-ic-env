@@ -199,7 +199,7 @@ setAnalysisMode -cppr both
 
 timeDesign -preCTS       -prefix preCTSSetup        -outDir ./outputs/timingReports/preCTSSetup
 
-optDesign  -preCTS -drv
+# optDesign  -preCTS -drv
 
 optDesign  -preCTS       -prefix preCTSSetupOpt     -outDir ./outputs/timingReports/preCTSSetupOpt
 optDesign  -preCTS -incr -prefix preCTSSetupIncrOpt -outDir ./outputs/timingReports/preCTSSetupIncrOpt
