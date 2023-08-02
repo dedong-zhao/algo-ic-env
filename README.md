@@ -188,14 +188,11 @@ restoreDesign stdp.enc.dat stdp
 # 5.1 Place -> Place Standard Cell
 place_design -noprePlaceOpt
 
-# checkPlace
 # unplaceAllInsts
-# editDelete -type Regular
 
 #==========================================================================================
 # 6. Pre-CTS Timing Analysis and Optimization
 #==========================================================================================
-
 setAnalysisMode -cppr both   
 
 timeDesign -preCTS       -prefix preCTSSetup        -outDir ./outputs/timingReports/preCTSSetup
@@ -208,15 +205,14 @@ optDesign  -preCTS -incr -prefix preCTSSetupIncrOpt -outDir ./outputs/timingRepo
 #==========================================================================================
 # 7. CTS
 #==========================================================================================
-
 create_ccopt_clock_tree_spec
 # get_ccopt_clock_trees * # myCLK
 set_ccopt_property target_max_trans 60 # 60ps
 set_ccopt_property target_skew 20 # 20ps
 ccopt_design
 
-report_ccopt_clock_trees -file ./outputs/stdp_clock_trees.rpt
-ctd_win
+# report_ccopt_clock_trees -file ./outputs/stdp_clock_trees.rpt
+# ctd_win
 
 #==========================================================================================
 # 8. Post-CTS Timing Analysis and Optimization
@@ -226,7 +222,7 @@ set_propagated_clock [all_clocks]
 set_interactive_constraint_modes {}
 
 # report_clocks
-get_property [all_clocks] is_propagated_clock
+# get_property [all_clocks] is_propagated_clock
 
 setAnalysisMode -cppr both
 
@@ -236,6 +232,9 @@ timeDesign -postCTS -hold -prefix postCTSHold  -outDir ./outputs/timingReports/p
 optDesign -postCTS       -prefix postCTSSetupOpt     -outDir ./outputs/timingReports/postCTSSetupOpt
 optDesign -postCTS -incr -prefix postCTSSetupIncrOpt -outDir ./outputs/timingReports/postCTSSetupIncrOpt
 optDesign -postCTS -hold -prefix postCTSHoldOpt      -outDir ./outputs/timingReports/postCTSHoldOpt
+
+# editDelete -type Regular
+
 #==========================================================================================
 # 9. Route
 #==========================================================================================
@@ -244,10 +243,12 @@ optDesign -postCTS -hold -prefix postCTSHoldOpt      -outDir ./outputs/timingRep
 
 routeDesign -globalDetail -viaOpt -wireOpt
 
+# editDelete -type Regular
+
 #==========================================================================================
 # 10. Post-Route Timing Analysis and Optimization
 #==========================================================================================
-report_clock_timing -type summary
+# report_clock_timing -type summary
 
 setAnalysisMode -cppr both -analysisType onChipVariation
 
@@ -257,6 +258,8 @@ timeDesign -postRoute -hold -prefix postRouteHold  -outDir ./outputs/timingRepor
 optDesign -postRoute       -prefix postRouteSetupOpt      -outDir ./outputs/timingReports/postRouteSetupOpt 
 optDesign -postRoute -incr -prefix postRouteSetupIncrOpt  -outDir ./outputs/timingReports/postRouteSetupIncrOpt
 optDesign -postRoute -hold -prefix postRouteHoldOpt       -outDir ./outputs/timingReports/postRouteHoldOpt
+
+# editDelete -type Regular
 
 #==========================================================================================
 # 11. Add Filler
