@@ -334,7 +334,7 @@ set init_gnd_net {VSS}
 set init_mmmc_file {inputs/mmmc.view}
 ```
 ### Voltus-Based Dynamic Power Analysis
-1. **Normal Power Report**
+1. **Normal Power Analysis**
 ```
 set_power_analysis_mode -reset
 
