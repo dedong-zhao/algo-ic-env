@@ -333,9 +333,54 @@ set init_gnd_net {VSS}
 # Analysis Configuration
 set init_mmmc_file {inputs/mmmc.view}
 ```
-### Voltus-Based Dynamic Power Analysis(GUI & CMDs)
+### Voltus-Based Dynamic Power Analysis
+1. **Normal Power Report**
 ```
-to be done
+set_power_analysis_mode -reset
+
+read_activity_file -reset
+
+set_power_output_dir ./outputs/powerReports
+
+report_power -outfile power.rpt
+```
+2. **Static Power Analysis**
+```
+set_power_analysis_mode -reset
+set_power_analysis_mode -analysis_view typ -method static -power_grid_library {
+    /ihp/projects/_COMMON/GF22FDX/22FDX-EXT_IP/GF22FDX_SC8T_104CPP_BASE_CSC20R_FDK_RELV05R50/model/power/voltus/TT_0P50V_0P00V_0P00V_0P00V_25C/techonly.cl \
+    /ihp/projects/_COMMON/GF22FDX/22FDX-EXT_IP/GF22FDX_SC8T_104CPP_BASE_CSC20R_FDK_RELV05R50/model/power/voltus/TT_0P50V_0P00V_0P00V_0P00V_25C/stdcells.cl
+}
+
+read_activity_file -reset
+read_activity_file -format VCD -scope stdp_tb/stdp_u0 -start 0ps -end 1420340ps -block {} ../xm/stdp.vcd
+
+set_power_output_dir ./outputs/powerReports/staticPowerResults
+
+report_power -outfile spa.rpt
+# Generate additional report formats
+# report_power -instances {u0} -outfile u0.rpt
+# report_power -instances {*} -outfile all.rpt
+# report_power -instances {ring} -outfile ring.rpt
+```
+3. **Dynamic Power Analysis**
+```
+set_power_analysis_mode -reset
+set_power_analysis_mode -analysis_view typ -method dynamic_vectorbased -disable_static false -write_static_currents true -power_grid_library {
+    /ihp/projects/_COMMON/GF22FDX/22FDX-EXT_IP/GF22FDX_SC8T_104CPP_BASE_CSC20R_FDK_RELV05R50/model/power/voltus/TT_0P50V_0P00V_0P00V_0P00V_25C/techonly.cl \
+    /ihp/projects/_COMMON/GF22FDX/22FDX-EXT_IP/GF22FDX_SC8T_104CPP_BASE_CSC20R_FDK_RELV05R50/model/power/voltus/TT_0P50V_0P00V_0P00V_0P00V_25C/stdcells.cl
+}
+
+read_activity_file -reset
+read_activity_file -format VCD -scope stdp_tb/stdp_u0 -start 0ps -end 1420340ps -block {} ../xm/stdp.vcd
+
+set_power_output_dir ./outputs/powerReports/dynamicPowerResults
+
+set_dynamic_power_simulation -reset
+
+#sim steps around 1000
+set_dynamic_power_simulation -period 10ns -resolution 10ps
+report_power -outfile spa.rpt
 ```
 ## Shell
 1. **\ps**：use original func of cmd `ps`.
