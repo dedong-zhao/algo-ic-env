@@ -140,21 +140,23 @@ set_false_path -to [get_ports $false_outputs]
 
 source ./inputs/stdp.globals
 set init_design_uniquify 1 
+setDesignMode -process 22
 init_design
 
-setDesignMode -process 22
 setPreference CmdLogMode 2
 setMultiCpuUsage -localCpu 16 -cpuPerRemoteHost 8 -remoteHost 0 -keepLicense true
 
 # 1.2 File -> Save/Restore Design
 saveDesign stdp.enc
-saveDesign design.enc -timingGraph
+saveDesign stdp.enc -timingGraph
 restoreDesign stdp.enc.dat stdp
 
 #==========================================================================================
 # 2. Floorplan
 #==========================================================================================
-# 2.1 Floorplan > Specify Floorplan
+# 2.1 Floorplan > Specify Floorplan > Advanced
+# left bottom right top
+floorPlan -site SC8T_104CPP_CMOS22FDX -r 0.812772133527 0.696316 10 10 10 10
 # saveFPlan inputs/stdp.fp
 # loadFPlan inputs/stdp.fp
 
@@ -171,16 +173,33 @@ restoreDesign stdp.enc.dat stdp
 #==========================================================================================
 # 4. Power Plan
 #==========================================================================================
-# 4.1 Power -> Power Planning -> Add Ring
-    # - Use "Offset" for easier ring configuration
+# 4.1 Power -> Connect Global Nets
+    # - Apply All
+
+globalNetConnect VDD -type pgpin -autoTie -pin VDD -all -override -verbose
+globalNetConnect VSS -type pgpin -autoTie -pin VSS -all -override -verbose
+
+# 4.2 Power -> Power Planning -> Add Ring
+    # - Spacing is dependent on Width. 
+    # - Plan power ring in highest metal layers for low resistance.
+    # - Center in channel
+
+addRing -nets {VDD VSS} -layer {top LB bottom LB left QB right QB} -width 2 -spacing 2 -center 1
 
 # Optional: Additional connections from power rings to power/ground rails in the core.
-# 4.2 Power -> Power Planning -> Add Stripes
+# 4.3 Power -> Power Planning -> Add Stripes
     # - "Width" and "Spacing" similar to power ring
     # - Use "Start" and "Stop" for easier stripe location
 
+addStripe -nets {VDD VSS} -layer QB -direction vertical -width 2 -spacing 2 -number_of_sets 1 -start_from left -start_offset 5 -stop_offset 0
+
 # VDD/VSS wires between rings and core power rails
-# 4.3 Route -> Special Route
+# 4.4 Route -> Special Route
+setSrouteMode -viaConnectToShape {ring}
+sroute -nets {VDD VSS} -connect {corePin}
+
+#remove all power preroutes(rings, stripes, rails) from the floor plan 
+deleteAllPowerPreroutes
 
 #==========================================================================================
 # 5. Place
@@ -188,19 +207,16 @@ restoreDesign stdp.enc.dat stdp
 # 5.1 Place -> Place Standard Cell
 place_design -noprePlaceOpt
 
-# unplaceAllInsts
-
 #==========================================================================================
-# 6. Pre-CTS Timing Analysis and Optimization
+# 6. Pre-CTS Timing Analysis and Optimization(Timing Violation Acceptable)
 #==========================================================================================
 setAnalysisMode -cppr both   
-
-timeDesign -preCTS       -prefix preCTSSetup        -outDir ./outputs/timingReports/preCTSSetup
-
+timeDesign -preCTS       -prefix preCTSSetup        -outDir ./timingReports/preCTSSetup
 # optDesign  -preCTS -drv
+optDesign  -preCTS       -prefix preCTSSetupOpt     -outDir ./timingReports/preCTSSetupOpt
+optDesign  -preCTS -incr -prefix preCTSSetupIncrOpt -outDir ./timingReports/preCTSSetupIncrOpt
 
-optDesign  -preCTS       -prefix preCTSSetupOpt     -outDir ./outputs/timingReports/preCTSSetupOpt
-optDesign  -preCTS -incr -prefix preCTSSetupIncrOpt -outDir ./outputs/timingReports/preCTSSetupIncrOpt
+# unplaceAllInsts
 
 #==========================================================================================
 # 7. CTS
@@ -226,12 +242,12 @@ set_interactive_constraint_modes {}
 
 setAnalysisMode -cppr both
 
-timeDesign -postCTS       -prefix postCTSSetup -outDir ./outputs/timingReports/postCTSSetup
-timeDesign -postCTS -hold -prefix postCTSHold  -outDir ./outputs/timingReports/postCTSHold
+timeDesign -postCTS       -prefix postCTSSetup -outDir ./timingReports/postCTSSetup
+timeDesign -postCTS -hold -prefix postCTSHold  -outDir ./timingReports/postCTSHold
 
-optDesign -postCTS       -prefix postCTSSetupOpt     -outDir ./outputs/timingReports/postCTSSetupOpt
-optDesign -postCTS -incr -prefix postCTSSetupIncrOpt -outDir ./outputs/timingReports/postCTSSetupIncrOpt
-optDesign -postCTS -hold -prefix postCTSHoldOpt      -outDir ./outputs/timingReports/postCTSHoldOpt
+optDesign -postCTS       -prefix postCTSSetupOpt     -outDir ./timingReports/postCTSSetupOpt
+optDesign -postCTS -incr -prefix postCTSSetupIncrOpt -outDir ./timingReports/postCTSSetupIncrOpt
+optDesign -postCTS -hold -prefix postCTSHoldOpt      -outDir ./timingReports/postCTSHoldOpt
 
 # editDelete -type Regular
 
@@ -243,8 +259,6 @@ optDesign -postCTS -hold -prefix postCTSHoldOpt      -outDir ./outputs/timingRep
 
 routeDesign -globalDetail -viaOpt -wireOpt
 
-# editDelete -type Regular
-
 #==========================================================================================
 # 10. Post-Route Timing Analysis and Optimization
 #==========================================================================================
@@ -252,12 +266,12 @@ routeDesign -globalDetail -viaOpt -wireOpt
 
 setAnalysisMode -cppr both -analysisType onChipVariation
 
-timeDesign -postRoute       -prefix postRouteSetup -outDir ./outputs/timingReports/postRouteSetup
-timeDesign -postRoute -hold -prefix postRouteHold  -outDir ./outputs/timingReports/postRouteHold
+timeDesign -postRoute       -prefix postRouteSetup -outDir ./timingReports/postRouteSetup
+timeDesign -postRoute -hold -prefix postRouteHold  -outDir ./timingReports/postRouteHold
 
-optDesign -postRoute       -prefix postRouteSetupOpt      -outDir ./outputs/timingReports/postRouteSetupOpt 
-optDesign -postRoute -incr -prefix postRouteSetupIncrOpt  -outDir ./outputs/timingReports/postRouteSetupIncrOpt
-optDesign -postRoute -hold -prefix postRouteHoldOpt       -outDir ./outputs/timingReports/postRouteHoldOpt
+optDesign -postRoute       -prefix postRouteSetupOpt      -outDir ./timingReports/postRouteSetupOpt 
+optDesign -postRoute -incr -prefix postRouteSetupIncrOpt  -outDir ./timingReports/postRouteSetupIncrOpt
+optDesign -postRoute -hold -prefix postRouteHoldOpt       -outDir ./timingReports/postRouteHoldOpt
 
 # editDelete -type Regular
 
@@ -265,20 +279,29 @@ optDesign -postRoute -hold -prefix postRouteHoldOpt       -outDir ./outputs/timi
 # 11. Add Filler
 #==========================================================================================
 # 11.1 Place > Physical Cell > Add Filler
+setFillerMode -core {SC8T_FILLX1_CSC20R SC8T_FILLX2_CSC20R SC8T_FILLX3_CSC20R SC8T_FILLX4_CSC20R SC8T_FILLX5_CSC20R SC8T_FILLX8_CSC20R SC8T_FILLX16_CSC20R SC8T_FILLX32_CSC20R SC8T_FILLX64_CSC20R SC8T_FILLX128_CSC20R} -preserveUserOrder true
+
+addFiller
 
 #==========================================================================================
 # 12. Verification
 #==========================================================================================
-# Optional if not taped out
 # 12.1 Verify > Verify DRC
+    # - Optional if not taped out
 verify_drc 
 
 # 12.2 Verify > Verify Conectivity 
     # - Regular Only
 verifyConnectivity -type regular
 
-editDelete -regular_wire_with_drc
-routeDesign
+# ecoRoute -fix_drc
+
+#==========================================================================================
+# 13. PPA
+#==========================================================================================
+report_timing > timing.rpt
+report_area > area.rpt
+source spa.tcl
 ```
 2. **mmmc.view**:
 ```
@@ -340,7 +363,7 @@ set_power_analysis_mode -reset
 
 read_activity_file -reset
 
-set_power_output_dir ./outputs/powerReports
+set_power_output_dir .
 
 report_power -outfile power.rpt
 ```
@@ -355,7 +378,7 @@ set_power_analysis_mode -analysis_view typ -method static -power_grid_library {
 read_activity_file -reset
 read_activity_file -format VCD -scope stdp_tb/stdp_u0 -start 0ps -end 1420340ps -block {} ../xm/stdp.vcd
 
-set_power_output_dir ./outputs/powerReports/staticPowerResults
+set_power_output_dir .
 
 report_power -outfile spa.rpt
 # Generate additional report formats
@@ -374,7 +397,7 @@ set_power_analysis_mode -analysis_view typ -method dynamic_vectorbased -disable_
 read_activity_file -reset
 read_activity_file -format VCD -scope stdp_tb/stdp_u0 -start 0ps -end 1420340ps -block {} ../xm/stdp.vcd
 
-set_power_output_dir ./outputs/powerReports/dynamicPowerResults
+set_power_output_dir ./dynamicPowerResults
 
 set_dynamic_power_simulation -reset
 
