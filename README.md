@@ -1,5 +1,34 @@
 # ASIC design environment
 ## EDA
+### Verdi
+1. **signal trace**: `put signal into search box(Ctrl + f) -> upper layer -> search`
+2. **search specific module**: `source -> find scope`
+3. **clean trace results**: `right click -> delete all`
+4. **find instantiation location**: `double click the module`
+5. **view import log in full screen**: `File -> View Import Log`
+6. **common Setting**:
+	- **Font**: `General -> Font and Size`
+	- **Editor**: `Editor -> Other`
+	- **Code Folding**: `Source Code -> Code Folding`
+	- **Code Trace**: `Trace -> General -> Trace View -> Show Top Level Ports`
+7. **nWave hot keys**:
+	- **b(begin)**: `move cursor to waveform start`
+	- **e(end)**: `move cursor to waveform end`
+	- **z(zoom out)**: `zoom out the waveform`
+	- **Z(zoom in)**: `zoom in the waveform`
+	- **Ctrl + Right Arrow**: `move right for half screen`
+	- **Ctrl + Left Arrow**: `move left for half screen`
+	- **c(color)**: `change the color, width and type of the waveform`
+	- **f(full)**: `full waveform`
+	- **x**: `show signal value at cursor`
+	- **g(get)**: `get signal to show its waveform`
+	- **l(last)**: `last view of the waveform`
+	- **m(marker)**: `add marker`
+	- **y**: `keep cursor at center, again to cancel`
+	- **s**: `make cursor alignned to signal edge`
+	- **count pulse number**: `select range -> View -> Signal Event Report`
+	- **h(hierarchy)**:`show signal hierarchy`
+	- **double click**: `locate signal in RTL`
 ### Xcelium
 1. **start and load project**: `xrun -f $PROJ_DIR/proj.vc -access +rwc -gui&`
 2. **improve font size**: `cp ${XCEILIUM_ROOT}/share/cdssetup/simvision/app-defaults/share/cdssetup/simvision/app-defaults/SimVision ~/.simvision/Xdefaults` and `vim  ~/.simvision/Xdefaults`
