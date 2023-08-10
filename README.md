@@ -507,21 +507,22 @@ report_power -outfile spa.rpt
 32. **ngg** or **:n**: go to line n; **gg**: go to head; **G**: go to end
 33. **:2,3>** or **shift+>+>** or **v+>+>**: indentation; **:2,3<** or **shift+<+<** or **v+<+<**: anti-indentation; 
 
-## Manual Software Installation and Uninstallation
-### Install
+## Msc
+### Manual Software Installation and Uninstallation
+#### Install
 1. tar -xvzf xxx.tar.gz
 2. cd xxx
 3. ./configure --prefix= tools/xxx
 4. make; make install
-### Uninstall
+#### Uninstall
 1. if installed with non-root account (installed into ~): just remove relevant dirs/files;
 2. if installed with root account:
    1. back into the dir where you ran ```./configure``` and ```make``` before, and run ```make uninstall```;
    2. if i doesn't work (Makefile not correctly written), try ```checkinstall``` which allows you
        to build from source code, but have the packages tracked by apt.
 
-## File Header Comment
-### VS Studio
+### File Header Comment
+#### VS Studio
 1. Manage --> User Snippets --> Verilog.jason
 2. Add the following code:
 ```
@@ -541,7 +542,7 @@ report_power -outfile spa.rpt
 }
 ```
 2. Type "header" and Enter
-### PyCharm
+#### PyCharm
 1. File --> Settings --> Editor --> File and Code Templates --> Python Script
 2. Add the following Code:
 ```
