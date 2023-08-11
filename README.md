@@ -550,7 +550,12 @@ report_power -outfile spa.rpt
 4. **git log**: show revision history of a file
 5. **git diff**: show the file changes not committed yet
 6. **git tag**: show all tags
-7. **gitk**: show GUI of Git
+7. **move tag**:
+   - git tag -d  \<tag\>
+   - git push origin --delete \<tag\>
+   - git tag \<tag\>
+   - git push origin \<tag\>
+9. **gitk**: show GUI of Git
 
 ### SVN
 1. **svn clone**: clone a repo
