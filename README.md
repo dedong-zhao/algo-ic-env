@@ -6,29 +6,29 @@
 3. **clean trace results**: `right click -> delete all`
 4. **find instantiation location**: `double click the module`
 5. **view import log in full screen**: `File -> View Import Log`
-6. **common Setting**:
-	- **Font**: `General -> Font and Size`
-	- **Editor**: `Editor -> Other`
-	- **Code Folding**: `Source Code -> Code Folding`
-	- **Code Trace**: `Trace -> General -> Trace View -> Show Top Level Ports`
+6. **common setting**:
+   - **Font**: `General -> Font and Size`
+   - **Editor**: `Editor -> Other`
+   - **Code Folding**: `Source Code -> Code Folding`
+   - **Code Trace**: `Trace -> General -> Trace View -> Show Top Level Ports`
 7. **nWave hot keys**:
-	- **b(begin)**: `move cursor to waveform start`
-	- **e(end)**: `move cursor to waveform end`
-	- **z(zoom out)**: `zoom out the waveform`
-	- **Z(zoom in)**: `zoom in the waveform`
-	- **Ctrl + Right Arrow**: `move right for half screen`
-	- **Ctrl + Left Arrow**: `move left for half screen`
-	- **c(color)**: `change the color, width and type of the waveform`
-	- **f(full)**: `full waveform`
-	- **x**: `show signal value at cursor`
-	- **g(get)**: `get signal to show its waveform`
-	- **l(last)**: `last view of the waveform`
-	- **m(marker)**: `add marker`
-	- **y**: `keep cursor at center, again to cancel`
-	- **s**: `make cursor alignned to signal edge`
-	- **count pulse number**: `select range -> View -> Signal Event Report`
-	- **h(hierarchy)**:`show signal hierarchy`
-	- **double click**: `locate signal in RTL`
+   - **b(begin)**: `move cursor to waveform start`
+   - **e(end)**: `move cursor to waveform end`
+   - **z(zoom out)**: `zoom out the waveform`
+   - **Z(zoom in)**: `zoom in the waveform`
+   - **Ctrl + Right Arrow**: `move right for half screen`
+   - **Ctrl + Left Arrow**: `move left for half screen`
+   - **c(color)**: `change the color, width and type of the waveform`
+   - **f(full)**: `full waveform`
+   - **x**: `show signal value at cursor`
+   - **g(get)**: `get signal to show its waveform`
+   - **l(last)**: `last view of the waveform`
+   - **m(marker)**: `add marker`
+   - **y**: `keep cursor at center, again to cancel`
+   - **s**: `make cursor alignned to signal edge`
+   - **count pulse number**: `select range -> View -> Signal Event Report`
+   - **h(hierarchy)**:`show signal hierarchy`
+   - **double click**: `locate signal in RTL`
 ### Xcelium
 1. **start and load project**: `xrun -f $PROJ_DIR/proj.vc -access +rwc -gui&`
 2. **improve font size**: `cp ${XCEILIUM_ROOT}/share/cdssetup/simvision/app-defaults/share/cdssetup/simvision/app-defaults/SimVision ~/.simvision/Xdefaults` and `vim  ~/.simvision/Xdefaults`
@@ -506,6 +506,29 @@ report_power -outfile spa.rpt
 31. **:vsp xx.v**: col split; **CTRL+w+w**: switch window
 32. **ngg** or **:n**: go to line n; **gg**: go to head; **G**: go to end
 33. **:2,3>** or **shift+>+>** or **v+>+>**: indentation; **:2,3<** or **shift+<+<** or **v+<+<**: anti-indentation; 
+
+## Git/SVN
+### Git
+1. **git clone**: clone a repo
+2. **check in**:
+   - git pull
+   - git status
+   - git add/update filename/
+   - git commit -m "comment"
+   - git push
+3. **check out**: git checkout filename
+4. **git log**: show revision history of a file
+5. **git diff**: show the file changes not committed yet
+6. **git tag**: show all tags
+7. **gitk**: show GUI of Git
+
+### SVN
+1. **svn clone**: clone a repo
+2.  **check in**:
+    - svn status
+    - svn add/update filename
+    - svn commit -m "comment"
+3. **svn diff**: show the file changes not committed yet
 
 ## Msc
 ### Manual Software Installation and Uninstallation
