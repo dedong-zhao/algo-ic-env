@@ -5,11 +5,11 @@
   * [Genus](#genus)
   * [Innovus](#innovus)
   * [DC-Based Synthesis Flow](#dc-based-synthesis-flow)
-  * [Innovus-Based Implementation Flow(GUI & CMDs)](#innovus-based-implementation-flow-gui---cmds-)
+  * [Innovus-Based Implementation Flow](#innovus-based-implementation-flow)
   * [Voltus-Based Dynamic Power Analysis](#voltus-based-dynamic-power-analysis)
 - [Shell](#shell)
 - [Vim](#vim)
-- [Git/SVN](#git-svn)
+- [Git and SVN](#git-and-svn)
   * [Git](#git)
   * [SVN](#svn)
 - [Msc](#msc)
@@ -21,7 +21,6 @@
     + [PyCharm](#pycharm)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
-
 
 ## EDA
 ### Verdi
@@ -184,7 +183,7 @@ set false_outputs [get_ports $false_ports -filter "port_direction == out"]
 set_false_path -from [get_ports $false_inputs]
 set_false_path -to [get_ports $false_outputs]
 ```
-### Innovus-Based Implementation Flow(GUI & CMDs)
+### Innovus-Based Implementation Flow
 ```
 #==========================================================================================
 # 1. Design Initialization
@@ -531,7 +530,7 @@ report_power -outfile spa.rpt
 32. **ngg** or **:n**: go to line n; **gg**: go to head; **G**: go to end
 33. **:2,3>** or **shift+>+>** or **v+>+>**: indentation; **:2,3<** or **shift+<+<** or **v+<+<**: anti-indentation; 
 
-## Git/SVN
+## Git and SVN
 ### Git
 1. **git clone**: clone a repo
 2. **check in**:
