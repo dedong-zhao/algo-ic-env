@@ -13,9 +13,6 @@
   * [Git](#git)
   * [SVN](#svn)
 - [Msc](#msc)
-  * [Manual Software Installation and Uninstallation](#manual-software-installation-and-uninstallation)
-    + [Install](#install)
-    + [Uninstall](#uninstall)
   * [File Header Comment](#file-header-comment)
     + [VS Studio](#vs-studio)
     + [PyCharm](#pycharm)
@@ -494,7 +491,17 @@ report_power -outfile spa.rpt
 34. **!\***: return the paras of last cmd
 35. **printenv**: Print all or part of envs
 36. **cat /proc/cpuinfo**: physical id(no. of physical CPUs), cpu cores(no. of cores per physical CPU), processor(no. of logical CPUs)
-
+37. **Manual Software Installation and Uninstallation**:
+    - **Install**
+        1. tar -xvzf xxx.tar.gz
+        2. cd xxx
+        3. ./configure --prefix= tools/xxx
+        4. make; make install
+    - **Uninstall**
+        1. if installed with non-root account (installed into ~): just remove relevant dirs/files;
+        2. if installed with root account:
+           1. back into the dir where you ran ```./configure``` and ```make``` before, and run ```make uninstall```;
+           2. if i doesn't work (Makefile not correctly written), try ```checkinstall``` which allows you to build from source code, but have the packages tracked by apt.
 ## Vim
 1. **:/string\c**: case insensitive matching
 2. **:/string\C**: case sensitive matching
@@ -554,19 +561,6 @@ report_power -outfile spa.rpt
 3. **svn diff**: show the file changes not committed yet
 
 ## Msc
-### Manual Software Installation and Uninstallation
-#### Install
-1. tar -xvzf xxx.tar.gz
-2. cd xxx
-3. ./configure --prefix= tools/xxx
-4. make; make install
-#### Uninstall
-1. if installed with non-root account (installed into ~): just remove relevant dirs/files;
-2. if installed with root account:
-   1. back into the dir where you ran ```./configure``` and ```make``` before, and run ```make uninstall```;
-   2. if i doesn't work (Makefile not correctly written), try ```checkinstall``` which allows you
-       to build from source code, but have the packages tracked by apt.
-
 ### File Header Comment
 #### VS Studio
 1. Manage --> User Snippets --> Verilog.jason
