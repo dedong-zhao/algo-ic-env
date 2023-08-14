@@ -20,6 +20,7 @@
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
 ## EDA
+
 ### Verdi
 1. **signal trace**: `put signal into search box(Ctrl + f) -> upper layer -> search`
 2. **search specific module**: `source -> find scope`
@@ -49,13 +50,18 @@
    - **count pulse number**: `select range -> View -> Signal Event Report`
    - **h(hierarchy)**:`show signal hierarchy`
    - **double click**: `locate signal in RTL`
+
 ### Xcelium
 1. **start and load project**: `xrun -f $PROJ_DIR/proj.vc -access +rwc -gui&`
 2. **improve font size**: `cp ${XCEILIUM_ROOT}/share/cdssetup/simvision/app-defaults/share/cdssetup/simvision/app-defaults/SimVision ~/.simvision/Xdefaults` and `vim  ~/.simvision/Xdefaults`
 3. **save the signal list in Waveform window**: `File -> Save Command Script` and `Source Command Script`
-4. **reload design in Waveform window**: `Simulation -> Reinvoke Simulator` 
+4. **reload design in Waveform window**: `Simulation -> Reinvoke Simulator`
+5. **zoom in/out waveform**: `Ctrl + Mouse Scroll Up/Down`
+6. **shift waveform**: `left/right arrow`
+
 ### Genus
 1. **generate template script for synthesis flow**: `write_template -simple -outfile tempname`
+
 ### Innovus
 1. **generate template script for implementation flow**: `write_flow_template`
 2. **fit, see the outline of the layout**: `f`
