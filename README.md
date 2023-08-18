@@ -545,9 +545,38 @@ report_power -outfile spa.rpt
 33. **:2,3>** or **shift+>+>** or **v+>+>**: indentation; **:2,3<** or **shift+<+<** or **v+<+<**: anti-indentation; 
 
 ## Vim Plugin
-1. **automatic verilog**
-   - https://automatic-verilog.honk.wang/#/
-   - https://github.com/HonkW93/automatic-verilog
+- **Source Code**: https://github.com/HonkW93/automatic-verilog
+- **Handbook**: https://automatic-verilog.honk.wang/#/handbook
+- **Configuration in .vimrc**:
+   ```
+   let g:atv_snippet_project = ''
+   let g:atv_snippet_company = 'HP GmbH & University of Potsdam'
+   let g:atv_snippet_device = ''
+   let g:atv_snippet_author = 'Dedong Zhao'
+   let g:atv_snippet_email = 'dedong.zhao@ihp-microelectronics.com'
+   let g:atv_snippet_website = ''
+
+   map ac <Plug>Atv_Snippet_AlB
+   map as <Plug>Atv_Snippet_AlBpn
+   map \ai :call g:AutoInst(0)<ESC> 
+   map \ap :call g:AutoPara(0)<ESC>
+   map \ad :call g:AutoDef()<ESC>  
+   map \aa :call g:AutoArg()<ESC>
+
+   ab ai /*autoinst*/
+   ab ap /*autoinstparam*/
+   ab ad /*autodef*/
+   ab aa /*autoarg*/
+   ab dir //Local Variables:<CR>verilog-library-directories:("." "./aaa/bbb/")<CR>verilog-library-directories-recursive:1<CR>End: 
+   ```
+- **Hot Keys**:
+   - **header comment**: `\hd`
+   - **comment**: `\//`(normal or visual mode)
+   - **always**: `\ac`, `\as`
+   - **auto instantiation**: `\ai`
+   - **auto parameter**: `\ap`
+   - **auto define**: `\ad`
+   - **auto argument**: `\aa`
 
 ## Git and SVN
 ### Git
