@@ -9,6 +9,7 @@
   * [Voltus-Based Dynamic Power Analysis](#voltus-based-dynamic-power-analysis)
 - [Shell](#shell)
 - [Vim](#vim)
+- [Vim Plugin](#vim-plugin)
 - [Git and SVN](#git-and-svn)
   * [Git](#git)
   * [SVN](#svn)
@@ -542,6 +543,11 @@ report_power -outfile spa.rpt
 31. **:vsp xx.v**: col split; **CTRL+w+w**: switch window
 32. **ngg** or **:n**: go to line n; **gg**: go to head; **G**: go to end
 33. **:2,3>** or **shift+>+>** or **v+>+>**: indentation; **:2,3<** or **shift+<+<** or **v+<+<**: anti-indentation; 
+
+## Vim Plugin
+1. **automatic verilog**
+   - https://automatic-verilog.honk.wang/#/
+   - https://github.com/HonkW93/automatic-verilog
 
 ## Git and SVN
 ### Git
