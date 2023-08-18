@@ -542,7 +542,8 @@ report_power -outfile spa.rpt
 30. **:u** or **u**: undo; **CTRL+r**: redo
 31. **:vsp xx.v**: col split; **CTRL+w+w**: switch window
 32. **ngg** or **:n**: go to line n; **gg**: go to head; **G**: go to end
-33. **:2,3>** or **shift+>+>** or **v+>+>**: indentation; **:2,3<** or **shift+<+<** or **v+<+<**: anti-indentation; 
+33. **:2,3>** or **shift+>+>** or **v+>+>**: indentation; **:2,3<** or **shift+<+<** or **v+<+<**: anti-indentation;
+34. **rx**: change single letter to x
 
 ## Vim Plugin
 - **Source Code**: https://github.com/HonkW93/automatic-verilog
