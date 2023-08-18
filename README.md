@@ -535,7 +535,7 @@ report_power -outfile spa.rpt
 23. **CTRL+v**: col operation; **I+ESC**: insert; **d+ESC**: delete; **c+ESC**: change
 24. **:e**: reload file
 25. **:/xx** or **\*xx**: search xx
-26. **\<int\>**: full word match
+26. **\\<int\\>**: full word match
 27. **:%s/foo/bar/g(c)**: global search and replace
 28. **50p**: plaste 50 times
 29. **yy+p**: copy and plaste; **dd+p**: cut and plaste
