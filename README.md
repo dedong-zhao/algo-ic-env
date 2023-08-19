@@ -557,8 +557,6 @@ report_power -outfile spa.rpt
    let g:atv_snippet_email = 'dedong.zhao@ihp-microelectronics.com'
    let g:atv_snippet_website = ''
 
-   map ac <Plug>Atv_Snippet_AlB
-   map as <Plug>Atv_Snippet_AlBpn
    map \ai :call g:AutoInst(0)<ESC> 
    map \ap :call g:AutoPara(0)<ESC>
    map \ad :call g:AutoDef()<ESC>  
@@ -568,6 +566,8 @@ report_power -outfile spa.rpt
    ab ap /*autoinstparam*/
    ab ad /*autodef*/
    ab aa /*autoarg*/
+   ab als always @(posedge clk or negedge rst_n) begin<CR>     if(!rst_n) begin<CR>        end<CR>     else begin<CR>      end<CR> end
+   ab alc always @(*) begin<CR>        end
    ab dir //Local Variables:<CR>verilog-library-directories:("." "./aaa/bbb/")<CR>verilog-library-directories-recursive:1<CR>End: 
    ```
 - **Hot Keys**:
