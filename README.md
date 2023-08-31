@@ -152,8 +152,13 @@ set_load -pin_load 0.02 [all_outputs]
 create_clock -name clk0 -period $CYCLE200M [get_ports clk0]
 create_clock -name clk1 -period $CYCLE8M [get_ports clk1]
 
+# jitter + skew
+# skew will be determined after CTS
 set_clock_uncertainty -hold 0.053 [all_clocks]
+
+# determined after CTS
 set_clock_transition 0.15 [all_clocks]
+
 set_input_transition 0.2 [remove_from_collection [all_inputs] [all_clocks]]
 
 #--------------------------------I/O Constraint-----------------------------
