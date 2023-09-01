@@ -156,6 +156,7 @@ create_clock -name clk1 -period $CYCLE8M [get_ports clk1]
 # skew will be determined after CTS
 set_clock_uncertainty -hold 0.053 [all_clocks]
 
+# slew
 # determined after CTS
 set_clock_transition 0.15 [all_clocks]
 
