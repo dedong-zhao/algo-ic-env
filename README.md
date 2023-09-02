@@ -119,33 +119,47 @@ write_sdc design_sdc_post_syn
 2. **design_sdc.tcl**:
 ```
 #==================================Env Vars===================================
-# time unit: 1ps
-set TIME_UNIT 1
-set CYCLE200G [expr 5 * $TIME_UNIT]
-set CYCLE8G [expr 125 * $TIME_UNIT]
+# time unit is ps for GF22nm technology
+set TIME_UNIT 1 
+set CYCLE1000G  [expr 1 * $TIME_UNIT]
+set CYCLE500G   [expr 2 * $TIME_UNIT]
+set CYCLE200G   [expr 5 * $TIME_UNIT]
+set CYCLE8G     [expr 125 * $TIME_UNIT]
+set CYCLE4G     [expr 250 * $TIME_UNIT]
+set CYCLE2G     [expr 500 * $TIME_UNIT]
+set CYCLE1G     [expr 1000 * $TIME_UNIT]
+set CYCLE500M   [expr 2000 * $TIME_UNIT]
 
 #==================================Design Env=================================
 #------------------------------Operating Conditions---------------------------
-#GUIDANCE: the worst case: P(1), V(LOW), T(HIGH) for stricter constraint.
-#set_operating_conditions -max ssg0p81v125c(default)
+# GUIDANCE: the worst case: P(1), V(LOW), T(HIGH) for stricter constraint.
+# set_operating_conditions -max ssg0p81v125c(default)
 
 #-------------------------System Interface Characteristics--------------------
-#An AND2 cell with minimum drving strength for stricter constraints.
-set_driving_cell -lib_cell AN2D0BWP7T30P140 [all_inputs]
-#If real clock, set infinite drive strength to avoid automatic buffer insertion.
-set_drive 0 [get_ports[list clk0 clk1]]
-set_load -pin_load 0.02 [all_outputs]
-#set_fanout_load 4 [all_outputs]
+# for clocks, set infinite drive strength to avoid automatic buffer insertion
+set_drive 0 [get_ports [list clk]]
+
+# 1/resistance as drive, proportional to cell size
+# should be small enough
+# AND2 SC8T_AN2X0P5_CSC20R in GF22FDX
+set_driving_cell -lib_cell SC8T_AN2X0P5_CSC20R [remove_from_collection [all_inputs] [all_clocks]]
+# set_input_transition 0.2 [remove_from_collection [all_inputs] [all_clocks]]
+
+# capacitance as load, proportional to cell size
+# should be large enough
+# D pin cap of SDFF SC8T_SDFFX1_CSC20R in GF22FDX
+set_load -pin_load 0.48356 [all_outputs]
+# set_fanout_load 4 [all_outputs]
 
 #---------------------------------Wire Load Model-----------------------------
-#GUIDANCE: WLM selection does not matter, it is not accurate.
-#set auto_wire_load_selection true(default)
+# GUIDANCE: WLM selection does not matter, it is not accurate.
+# set auto_wire_load_selection true(default)
 
 #==================================Design Rule Constr=========================
-#GUIDANCE: use the default
-#set_max_transition  0.25 [current_design]
-#set_max_fanout      32   [current_design]
-#set_max_capacitance 0.5  [current_design]
+# GUIDANCE: use the default
+# set_max_transition  0.25 [current_design]
+# set_max_fanout      32   [current_design]
+# set_max_capacitance 0.5  [current_design]
 
 #==============================Design Optimiz Constr=========================
 #--------------------------------Clock Definition------------------------------
@@ -153,24 +167,22 @@ create_clock -name clk0 -period $CYCLE200M [get_ports clk0]
 create_clock -name clk1 -period $CYCLE8M [get_ports clk1]
 
 # jitter + skew
-# skew will be determined after CTS
-set_clock_uncertainty -hold 0.053 [all_clocks]
+# shoud only include jitter after CTS
+set_clock_uncertainty -setup 0.1*$CYCLE500M [all_clocks]
+set_clock_uncertainty -hold 0.05*$CYCLE500M [all_clocks]
 
-# slew
-# determined after CTS
-set_clock_transition 0.15 [all_clocks]
-
-set_input_transition 0.2 [remove_from_collection [all_inputs] [all_clocks]]
+# should be removed after CTS
+set_clock_transition 0.01*$CYCLE500M [all_clocks]
 
 #--------------------------------I/O Constraint-----------------------------
-#rst_ports
+# rst_ports
 set rst_inputs [get_ports [list \
     rst0 \
     rst1 \
 ]]
 set_ideal_network $rst_inputs
 
-#ports in clk0 domain
+# ports in clk0 domain
 set clk0_ports [get_ports [list \
     clk0_port0 \
     clk0_port1 \
