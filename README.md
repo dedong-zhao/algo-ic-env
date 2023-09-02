@@ -62,6 +62,12 @@
 
 ### Genus
 1. **generate template script for synthesis flow**: `write_template -simple -outfile tempname`
+2. **run genus**:
+```
+rm -rf genus* outputs* reports* fv
+genus -files stdp_syn_flow.tcl -abort_on_error
+```
+3. **fail and stop when issuing Errors**: `set_db / .fail_on_error_mesg true`
 
 ### Innovus
 1. **generate template script for implementation flow**: `write_flow_template`
