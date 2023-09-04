@@ -73,6 +73,7 @@ genus -files stdp_syn_flow.tcl -abort_on_error&
 1. **generate template script for implementation flow**: `write_flow_template`
 2. **fit, see the outline of the layout**: `f`
 3. **zoom in selected area**: `mouse right click –> hold –> drag –> release`
+4. **undo last operation**: `undo`
 
 ### DC-Based Synthesis Flow
 1. **design_syn_flow.tcl**:
