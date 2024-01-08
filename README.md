@@ -1,4 +1,4 @@
-# ASIC design environment
+# Digital IC design environment
 - [EDA](#eda)
   * [Verdi](#verdi)
   * [Xcelium](#xcelium)
