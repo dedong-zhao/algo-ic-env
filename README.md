@@ -59,6 +59,7 @@
 4. **reload design in Waveform window**: `Simulation -> Reinvoke Simulator`
 5. **zoom in/out waveform**: `Ctrl + Mouse Scroll Up/Down`
 6. **shift waveform**: `left/right arrow`
+7. **center cursor**: `Alt + c`
 
 ### Genus
 1. **generate template script for synthesis flow**: `write_template -simple -outfile tempname`
@@ -570,6 +571,7 @@ report_power -outfile spa.rpt
 32. **ngg** or **:n**: go to line n; **gg**: go to head; **G**: go to end
 33. **:2,3>** or **shift+>+>** or **v+>+>**: indentation; **:2,3<** or **shift+<+<** or **v+<+<**: anti-indentation;
 34. **rx**: change single letter to x
+35. **vimdiff**: compare two files file1 and file2 
 
 ## Vim Plugin
 - **Source Code**: https://github.com/HonkW93/automatic-verilog
