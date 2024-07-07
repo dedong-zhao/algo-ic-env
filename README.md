@@ -535,7 +535,7 @@ report_power -outfile spa.rpt
         1. if installed with non-root account (installed into ~): just remove relevant dirs/files;
         2. if installed with root account:
            1. back into the dir where you ran ```./configure``` and ```make``` before, and run ```make uninstall```;
-           2. if i doesn't work (Makefile not correctly written), try ```checkinstall``` which allows you to build from source code, but have the packages tracked by apt.
+           2. if a doesn't work (Makefile not correctly written), try ```checkinstall``` which allows you to build from source code, but have the packages tracked by apt.
 ## Vim
 1. **:/string\c**: case insensitive matching
 2. **:/string\C**: case sensitive matching
