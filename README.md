@@ -636,6 +636,35 @@ report_power -outfile spa.rpt
 3. **svn diff**: show the file changes not committed yet
 
 ## Msc
+### Writing C Extensions Using Python's C API
+1. Write the C function, e.g., stdp_trace.c
+
+2. Create a setup.py file
+```
+# setup.py
+from setuptools import setup, Extension
+
+module = Extension('stdp',
+                   sources=['stdp_trace.c'])
+
+setup(name='stdp',
+      version='1.0',
+      description='This is a STDP module',
+      ext_modules=[module])
+```
+
+3. Build the module
+```
+python setup.py build_ext --inplace
+```
+The model built: stdp.cpython-310-x86_64-linux-gnu.so
+
+4. Call the C function in Python code
+```
+import stdp
+...
+stdp.stdp_trace(...)
+```
 ### File Header Comment
 #### VS Studio
 1. Manage --> User Snippets --> Verilog.jason
@@ -656,7 +685,7 @@ report_power -outfile spa.rpt
 	}
 }
 ```
-2. Type "header" and Enter
+3. Type "header" and Enter
 #### PyCharm
 1. File --> Settings --> Editor --> File and Code Templates --> Python Script
 2. Add the following Code:
