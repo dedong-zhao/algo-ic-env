@@ -7,9 +7,14 @@
   * [DC-Based Synthesis Flow](#dc-based-synthesis-flow)
   * [Innovus-Based Implementation Flow](#innovus-based-implementation-flow)
   * [Voltus-Based Dynamic Power Analysis](#voltus-based-dynamic-power-analysis)
-- [Shell](#shell)
-- [Vim](#vim)
-- [Vim Plugin](#vim-plugin)
+- [Linux](#linux)
+  * [Shell](#shell)
+  * [Vim](#vim)
+  * [Vim Plugin](#vim-plugin)
+- [C Programming](#c-programming)
+  * [Makefile](#makefile)
+  * [GDB](#gdb)
+  * [Valgrind](#valgrind)
 - [Git and SVN](#git-and-svn)
   * [Git](#git)
   * [SVN](#svn)
@@ -21,10 +26,7 @@
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
-
-
 ## EDA
-
 ### Verdi
 1. **signal trace**: `put signal into search box(Ctrl + f) -> upper layer -> search`
 2. **search specific module**: `source -> find scope`
@@ -612,10 +614,8 @@ report_power -outfile spa.rpt
    - **auto argument**: `\aa`
 ## C Programming
 ### Makefile
-1. make
-2. make run
-3. make clean
-4. template
+1. make, make run, make clean
+2. general template
 ```
 # Define compiler and compile options
 CC = gcc
