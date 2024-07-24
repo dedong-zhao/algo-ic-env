@@ -612,12 +612,14 @@ report_power -outfile spa.rpt
    - **auto parameter**: `\ap`
    - **auto define**: `\ad`
    - **auto argument**: `\aa`
+
 ## C Programming
 ### Makefile
 1. make, make run, make clean
 2. general template
 ```
 # Define compiler and compile options
+# -g -O0 necessary for debugging
 CC = gcc
 CFLAGS = -Wall -Wextra  -std=c99 -g -O0
 
@@ -660,10 +662,15 @@ run: $(TARGET)
 
 ```
 ### GDB
-1. gdb snn_train
-2. 
+1. gdb ./snn_train
+2. (gdb) break src/utils.c:148
+3. (gdb) run
+4. (gdb) print a[i]
+5. (gdb) next
+6. (gdb) info breakpoints
+7. (gdb) delete
 ### Valgrind
-
+1. valgrind --leak-check=full ./snn_train
 
 ## Git and SVN
 ### Git
