@@ -1,4 +1,4 @@
-# Digital IC design environment
+# Environment for algorithm and IC development
 - [EDA](#eda)
   * [Verdi](#verdi)
   * [Xcelium](#xcelium)
