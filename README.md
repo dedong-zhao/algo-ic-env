@@ -619,7 +619,7 @@ report_power -outfile spa.rpt
 ```
 # Define compiler and compile options
 CC = gcc
-CFLAGS = -Wall -Wextra  -std=c99 -fopenmp -lm -g -O0
+CFLAGS = -Wall -Wextra  -std=c99 -g -O0
 
 # Define include directory and source directory
 INCLUDES = -I./include
