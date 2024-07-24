@@ -491,7 +491,8 @@ set_dynamic_power_simulation -reset
 set_dynamic_power_simulation -period 10ns -resolution 10ps
 report_power -outfile spa.rpt
 ```
-## Shell
+## Linux
+### Shell
 1. **\ps**：use original func of cmd `ps`.
 2. **ps | grep simv | awk '{print $1}' | xargs kill -9**: clean processes in bulk
 3. **ps -ef |grep defunct | awk '{print $2 “ ” $3}' |xargs kill -9**: clean zombie processes in bulk
@@ -539,7 +540,7 @@ report_power -outfile spa.rpt
         2. if installed with root account:
            1. back into the dir where you ran ```./configure``` and ```make``` before, and run ```make uninstall```;
            2. if a doesn't work (Makefile not correctly written), try ```checkinstall``` which allows you to build from source code, but have the packages tracked by apt.
-## Vim
+### Vim
 1. **:/string\c**: case insensitive matching
 2. **:/string\C**: case sensitive matching
 3. **ggVG**: select all
@@ -576,7 +577,7 @@ report_power -outfile spa.rpt
 34. **rx**: change single letter to x
 35. **vimdiff**: compare two files file1 and file2 
 
-## Vim Plugin
+### Vim Plugin
 - **Source Code**: https://github.com/HonkW93/automatic-verilog
 - **Handbook**: https://automatic-verilog.honk.wang/#/handbook
 - **Configuration in .vimrc**:
@@ -609,6 +610,60 @@ report_power -outfile spa.rpt
    - **auto parameter**: `\ap`
    - **auto define**: `\ad`
    - **auto argument**: `\aa`
+## C Programming
+### Makefile
+1. make
+2. make run
+3. make clean
+4. template
+```
+# Define compiler and compile options
+CC = gcc
+CFLAGS = -Wall -Wextra  -std=c99 -fopenmp -lm -g -O0
+
+# Define include directory and source directory
+INCLUDES = -I./include
+SRC_DIR = ./src
+OBJ_DIR = ./obj
+
+# Define source files and object files
+SRCS = $(wildcard $(SRC_DIR)/*.c)
+OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
+
+# Define the name of the executable file
+TARGET = snn_train 
+
+# Default target
+all: $(TARGET)
+
+# Compile the executable file
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
+
+# Compile object files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+# Create the object files directory
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+# Clean up the compiled files
+clean:
+	rm -rf $(OBJ_DIR) $(TARGET)
+
+# Run the executable file
+run: $(TARGET)
+	./$(TARGET)
+
+.PHONY: all clean run
+
+```
+### GDB
+1. gdb snn_train
+2. 
+### Valgrind
+
 
 ## Git and SVN
 ### Git
