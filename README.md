@@ -670,7 +670,7 @@ run: $(TARGET)
 6. (gdb) info breakpoints
 7. (gdb) delete
 ### Valgrind
-1. valgrind --leak-check=full ./snn_train
+1. valgrind --tool=memcheck --leak-check=full --track-origins=yes ./snn_train
 
 ## Git and SVN
 ### Git
