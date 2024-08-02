@@ -674,23 +674,27 @@ run: $(TARGET)
 
 ## Git and SVN
 ### Git
-1. **git clone**: clone a repo
-2. **check in**:
+1. **git clone**
+   - git clone https://github.com/dedong-zhao/SNNs: clone a repo
+   - git clone https://github.com/dedong-zhao/SNNs .: clone a repo at cur dir (without creating a dir)
+4. **check in**:
    - git pull
    - git status
-   - git add/update filename/
+   - git add file0
+   - git add .: stage all files
+   - git reset file1 file2: cancel staging of file1 and file2
    - git commit -m "comment"
-   - git push
-3. **check out**: git checkout filename
-4. **git log**: show revision history of a file
-5. **git diff**: show the file changes not committed yet
-6. **git tag**: show all tags
-7. **move tag**:
+   - git push origin main
+5. **check out**: git checkout filename
+6. **git log**: show revision history of a file
+7. **git diff**: show the file changes not committed yet
+8. **git tag**: show all tags
+9. **move tag**:
    - git tag -d  \<tag\>
    - git push origin --delete \<tag\>
    - git tag \<tag\>
    - git push origin \<tag\>
-9. **gitk**: show GUI of Git
+10. **gitk**: show GUI of Git
 
 ### SVN
 1. **svn clone**: clone a repo
