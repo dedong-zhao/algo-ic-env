@@ -675,8 +675,20 @@ run: $(TARGET)
 ## Git and SVN
 ### Git
 1. **git clone**
-   - git clone https://github.com/dedong-zhao/SNNs: clone a repo
-   - git clone https://github.com/dedong-zhao/SNNs .: clone a repo at cur dir (without creating a dir)
+   - HTTPS:
+      - git clone https://github.com/dedong-zhao/SNNs: clone a repo
+      - git clone https://github.com/dedong-zhao/SNNs .: clone a repo at cur dir (without creating a dir)
+   - SSH:
+      - Generate an SSH key (if you don't have one already)
+        ```ssh-keygen -t rsa -b 4096 -C "your_email@example.com"```
+      - Add your SSH key to the SSH agent
+        ```eval "$(ssh-agent -s)"```
+        ```ssh-add ~/.ssh/id_rsa```
+      - Copy the SSH key to your clipboard and add it to your Git account settings
+        ```cat ~/.ssh/id_rsa.pub```
+      - Clone the repository using the SSH URL
+        ```git clone git@git.ihp-microelectronics.com:d-sya/public/snn.git```
+
 4. **check in**:
    - git pull
    - git status
