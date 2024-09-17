@@ -666,9 +666,10 @@ run: $(TARGET)
 2. (gdb) break src/utils.c:148
 3. (gdb) run
 4. (gdb) print a[i]
-5. (gdb) next
-6. (gdb) info breakpoints
-7. (gdb) delete
+5. (gdb) step #inside function
+6. (gdb) next #not inside function
+7. (gdb) info breakpoints
+8. (gdb) delete
 ### Valgrind
 1. valgrind --tool=memcheck --leak-check=full --track-origins=yes ./snn_train
 
