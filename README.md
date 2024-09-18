@@ -662,14 +662,18 @@ run: $(TARGET)
 
 ```
 ### GDB
-1. gdb ./snn_train
-2. (gdb) break src/utils.c:148
-3. (gdb) run
-4. (gdb) print a[i]
-5. (gdb) step #inside function
-6. (gdb) next #not inside function
-7. (gdb) info breakpoints
-8. (gdb) delete
+1. `gdb ./snn_train`
+2. `(gdb) start`: stop at the first line of main()
+3. `(gdb) info threads`
+4. `(gdb) thread thead_id`
+5. `(gdb) continue`: continue from the breakpoint
+6. `(gdb) run`: run through the program
+7. `(gdb) break utils.c:148`
+8. `(gdb) print a[i]`
+9. `(gdb) step`: inside function
+10. `(gdb) next`: not inside function
+11. `(gdb) info breakpoints`
+12. `(gdb) delete`: delete all breakpoints
 ### Valgrind
 1. valgrind --tool=memcheck --leak-check=full --track-origins=yes ./snn_train
 
