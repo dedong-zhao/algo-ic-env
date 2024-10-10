@@ -567,17 +567,18 @@ report_power -outfile spa.rpt
 22. **gf**: go to file; **CTRL+^**: go back to last file
 23. **CTRL+v**: col operation; **I+ESC**: insert; **d+ESC**: delete; **c+ESC**: change
 24. **:e**: reload file
-25. **:/xx** or **\*xx**: search xx
-26. **\\<int\\>**: full word match
-27. **:%s/foo/bar/g(c)**: global search and replace
-28. **50p**: plaste 50 times
-29. **yy+p**: copy and plaste; **dd+p**: cut and plaste
-30. **:u** or **u**: undo; **CTRL+r**: redo
-31. **:vsp xx.v**: col split; **CTRL+w+w**: switch window
-32. **ngg** or **:n**: go to line n; **gg**: go to head; **G**: go to end
-33. **:2,3>** or **shift+>+>** or **v+>+>**: indentation; **:2,3<** or **shift+<+<** or **v+<+<**: anti-indentation;
-34. **rx**: change single letter to x
-35. **vimdiff**: compare two files file1 and file2 
+25. **set autoread**: reload file automatically
+26. **:/xx** or **\*xx**: search xx
+27. **\\<int\\>**: full word match
+28. **:%s/foo/bar/g(c)**: global search and replace
+29. **50p**: plaste 50 times
+30. **yy+p**: copy and plaste; **dd+p**: cut and plaste
+31. **:u** or **u**: undo; **CTRL+r**: redo
+32. **:vsp xx.v**: col split; **CTRL+w+w**: switch window
+33. **ngg** or **:n**: go to line n; **gg**: go to head; **G**: go to end
+34. **:2,3>** or **shift+>+>** or **v+>+>**: indentation; **:2,3<** or **shift+<+<** or **v+<+<**: anti-indentation;
+35. **rx**: change single letter to x
+36. **vimdiff**: compare two files file1 and file2 
 
 ### Vim Plugin
 - **Source Code**: https://github.com/HonkW93/automatic-verilog
