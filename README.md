@@ -1,31 +1,31 @@
 # Environment for algorithm and IC development
-- [EDA](#eda)
-  * [Verdi](#verdi)
-  * [Xcelium](#xcelium)
-  * [Genus](#genus)
-  * [Innovus](#innovus)
-  * [DC-Based Synthesis Flow](#dc-based-synthesis-flow)
-  * [Innovus-Based Implementation Flow](#innovus-based-implementation-flow)
-  * [Voltus-Based Dynamic Power Analysis](#voltus-based-dynamic-power-analysis)
-- [Linux](#linux)
-  * [Shell](#shell)
-  * [Vim](#vim)
-  * [Vim Plugin](#vim-plugin)
-- [C Programming](#c-programming)
-  * [Makefile](#makefile)
-  * [GDB](#gdb)
-  * [Valgrind](#valgrind)
-- [Git and SVN](#git-and-svn)
-  * [Git](#git)
-  * [SVN](#svn)
-- [Msc](#msc)
-  * [Writing C Extensions Using Python's C API](#writing-c-extensions-using-python-s-c-api)
-  * [File Header Comment](#file-header-comment)
-    + [VS Studio](#vs-studio)
-    + [PyCharm](#pycharm)
+- [Environment for algorithm and IC development](#environment-for-algorithm-and-ic-development)
+  * [EDA](#eda)
+    + [Verdi](#verdi)
+    + [Xcelium](#xcelium)
+    + [Genus](#genus)
+    + [Innovus](#innovus)
+    + [DC-Based Synthesis Flow](#dc-based-synthesis-flow)
+    + [Innovus-Based Implementation Flow](#innovus-based-implementation-flow)
+    + [Voltus-Based Dynamic Power Analysis](#voltus-based-dynamic-power-analysis)
+  * [Linux](#linux)
+    + [Shell](#shell)
+    + [Vim](#vim)
+    + [Vim Plugin](#vim-plugin)
+    + [C Programming](#c-programming)
+      - [Makefile](#makefile)
+      - [GDB](#gdb)
+      - [Valgrind](#valgrind)
+  * [Git and SVN](#git-and-svn)
+    + [Git](#git)
+    + [SVN](#svn)
+  * [Msc](#msc)
+    + [Writing C Extensions Using Python's C API](#writing-c-extensions-using-python-s-c-api)
+    + [File Header Comment](#file-header-comment)
+      - [VS Studio](#vs-studio)
+      - [PyCharm](#pycharm)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
-
 ## EDA
 ### Verdi
 1. **signal trace**: `put signal into search box(Ctrl + f) -> upper layer -> search`
@@ -531,7 +531,8 @@ report_power -outfile spa.rpt
 34. **!\***: return the paras of last cmd
 35. **printenv**: Print all or part of envs
 36. **cat /proc/cpuinfo**: physical id(no. of physical CPUs), cpu cores(no. of cores per physical CPU), processor(no. of logical CPUs)
-37. **Manual Software Installation and Uninstallation**:
+37. **quota -s**: disk space and file usuage
+38. **Manual Software Installation and Uninstallation**:
     - **Install**
         1. tar -xvzf xxx.tar.gz
         2. cd xxx
@@ -541,7 +542,7 @@ report_power -outfile spa.rpt
         1. if installed with non-root account (installed into ~): just remove relevant dirs/files;
         2. if installed with root account:
            1. back into the dir where you ran ```./configure``` and ```make``` before, and run ```make uninstall```;
-           2. if a doesn't work (Makefile not correctly written), try ```checkinstall``` which allows you to build from source code, but have the packages tracked by apt.
+           2. if a doesn't work (Makefile not correctly written), try ```checkinstall``` which allows you to build from source code, but have the packages tracked by apt. 
 ### Vim
 1. **:/string\c**: case insensitive matching
 2. **:/string\C**: case sensitive matching
@@ -568,17 +569,20 @@ report_power -outfile spa.rpt
 23. **CTRL+v**: col operation; **I+ESC**: insert; **d+ESC**: delete; **c+ESC**: change
 24. **:e**: reload file
 25. **set autoread**: reload file automatically
-26. **:/xx** or **\*xx**: search xx
-27. **\\<int\\>**: full word match
-28. **:%s/foo/bar/g(c)**: global search and replace
-29. **50p**: plaste 50 times
-30. **yy+p**: copy and plaste; **dd+p**: cut and plaste
-31. **:u** or **u**: undo; **CTRL+r**: redo
-32. **:vsp xx.v**: col split; **CTRL+w+w**: switch window
-33. **ngg** or **:n**: go to line n; **gg**: go to head; **G**: go to end
-34. **:2,3>** or **shift+>+>** or **v+>+>**: indentation; **:2,3<** or **shift+<+<** or **v+<+<**: anti-indentation;
-35. **rx**: change single letter to x
-36. **vimdiff**: compare two files file1 and file2 
+27. **:/xx** or **\*xx**: search xx
+28. **\\<int\\>**: full word match
+29. **:%s/foo/bar/g(c)**: global search and replace
+30. **50p**: plaste 50 times
+31. **yy+p**: copy and plaste; **dd+p**: cut and plaste
+32. **:u** or **u**: undo; **CTRL+r**: redo
+33. **:vsp xx.v**: col split; **CTRL+w+w**: switch window
+34. **ngg** or **:n**: go to line n; **gg**: go to head; **G**: go to end
+35. **:2,3>** or **shift+>+>** or **v+>+>**: indentation; **:2,3<** or **shift+<+<** or **v+<+<**: anti-indentation;
+36. **rx**: change single letter to x
+37. **vimdiff**: compare two files file1 and file2
+38. **set nu**: show line number
+39. **set tab=4**: use 4 spaces for the Tab key 
+40. **syntax on**: syntax highlighted
 
 ### Vim Plugin
 - **Source Code**: https://github.com/HonkW93/automatic-verilog
