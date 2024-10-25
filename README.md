@@ -613,9 +613,8 @@ report_power -outfile spa.rpt
    - **auto parameter**: `\ap`
    - **auto define**: `\ad`
    - **auto argument**: `\aa`
-
-## C Programming
-### Makefile
+### C Programming
+#### Makefile
 1. make, make run, make clean
 2. general template
 ```
@@ -662,7 +661,7 @@ run: $(TARGET)
 .PHONY: all clean run
 
 ```
-### GDB
+#### GDB
 1. **gdb ./snn_train**
 2. **(gdb) start**: stop at the first line of main()
 3. **(gdb) info threads**
@@ -675,9 +674,32 @@ run: $(TARGET)
 10. **(gdb) next**: not inside function
 11. **(gdb) info breakpoints**
 12. **(gdb) delete**: delete all breakpoints
-### Valgrind
+#### Valgrind
 1. valgrind --tool=memcheck --leak-check=full --track-origins=yes ./snn_train
 
+### Slurm
+1. **snn_train.job**:
+```
+#!/bin/bash
+
+#SBATCH --partition=all              # on the partition "all"
+#SBATCH --nodes=1                    # on a single node
+#SBATCH --ntasks=1                   # with a single task (this should always be 1, apart from special cases)
+#SBATCH --cpus-per-task=64           # with that many cpu cores
+#SBATCH --mem=64G                    # will require that amount of RAM at maximum (if the process takes more it gets killed)
+#SBATCH --time=1-00:00               # maximum runtime of the job as "d-hh:mm"
+#SBATCH --chdir=/work/zhao7          # working directory of the job
+#SBATCH --mail-type=ALL              # always get mail notifications
+#SBATCH --output=slurm-%j.out        # standard out of the job into this file (also stderr)
+
+make clean
+make
+make run
+```
+2. **sbatch snn_train.job**
+3. **squeue --user=$USER**
+4. **scancel jobid**
+5. 
 ## Git and SVN
 ### Git
 1. **git clone**
