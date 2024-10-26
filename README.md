@@ -532,7 +532,8 @@ report_power -outfile spa.rpt
 35. **printenv**: Print all or part of envs
 36. **cat /proc/cpuinfo**: physical id(no. of physical CPUs), cpu cores(no. of cores per physical CPU), processor(no. of logical CPUs)
 37. **quota -s**: disk space and file usuage
-38. **Manual Software Installation and Uninstallation**:
+38. **tail -f xx.log**: show log file in real time
+39. **Manual Software Installation and Uninstallation**:
     - **Install**
         1. tar -xvzf xxx.tar.gz
         2. cd xxx
