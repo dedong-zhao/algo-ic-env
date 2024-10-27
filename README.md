@@ -513,7 +513,7 @@ report_power -outfile spa.rpt
 16. **Ctrl + c**：end process
 17. **jobs**：show suspended process, can be killed further using `kill %n`
 18. **du -sh \***: show files' size in cur dir recursively.
-19. **grep -r xxx .**: search string xxx recursively
+19. **grep -r . -e 'xx'**: search string xx recursively in the current directory
 20. **firefox xxx.html**: open html doc
 21. **which**: show the full path of (shell) commands
 22. **top**: display processes（exit with `Ctrl + c`）
